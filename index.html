@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estación MPS · Estación clasificadora de materiales | Proyecto Integrador</title>
+  <meta name="description" content="Portafolio del Proyecto Integrador «Estación MPS»: diseño y construcción de un prototipo de laboratorio que clasifica piezas metálicas y no metálicas con banda transportadora, sensores inductivo y capacitivo y un controlador propio basado en Arduino.">
+  <meta name="author" content="Juan Camilo Orjuela, John Alejandro Ibañez, Juan Carlo Ferreira, Danilo Farfan, Juan David Garzon">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f151b" media="(prefers-color-scheme: dark)">
+
+  <!-- Open Graph. Nota: og:image y og:url deben ser URL absolutas; actualízalas al publicar (ver README). -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:site_name" content="Estación MPS · Proyecto Integrador">
+  <meta property="og:title" content="Estación MPS: estación clasificadora de materiales">
+  <meta property="og:description" content="Prototipo de laboratorio que detecta y clasifica piezas metálicas y no metálicas con banda transportadora, sensores y un controlador propio basado en Arduino.">
+  <meta property="og:image" content="assets/img/estacion-banda-sensores-servos.png">
+  <meta property="og:image:alt" content="Prototipo de la estación: banda transportadora negra con sensores y brazos de desvío sobre una mesa de laboratorio.">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <!-- Aplica el tema guardado antes de pintar, para evitar parpadeo. -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('mps-tema');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header" id="cabecera">
+    <div class="container site-header__inner">
+      <a class="brand" href="#inicio" aria-label="Estación MPS, ir al inicio">
+        <svg class="brand__mark" viewBox="0 0 64 64" width="28" height="28" aria-hidden="true" focusable="false">
+          <rect x="22" y="12" width="16" height="16" rx="2" class="brand__piece"/>
+          <rect x="6" y="34" width="52" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="5"/>
+          <circle cx="15" cy="42" r="3" fill="currentColor"/>
+          <circle cx="49" cy="42" r="3" fill="currentColor"/>
+        </svg>
+        <span class="brand__text">Estación MPS</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+        <span class="nav-toggle__label">Menú</span>
+      </button>
+
+      <nav class="site-nav" id="menu-principal" aria-label="Secciones de la página">
+        <ul class="site-nav__list">
+          <li><a href="#problema">Problema</a></li>
+          <li><a href="#funcionamiento">Funcionamiento</a></li>
+          <li><a href="#componentes">Componentes</a></li>
+          <li><a href="#metodologia">Metodología</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#estado">Estado</a></li>
+          <li><a href="#costos">Costos</a></li>
+          <li><a href="#conclusiones">Conclusiones</a></li>
+          <li><a href="#equipo">Equipo</a></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" type="button" id="conmutador-tema" aria-label="Cambiar a tema oscuro">
+        <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="4.2" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>
+          </g>
+        </svg>
+        <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+          <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="inicio" aria-labelledby="titulo-principal">
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <p class="eyebrow">Proyecto Integrador · Semestre VI · Bogotá D.C., 2026</p>
+          <h1 id="titulo-principal">
+            Estación MPS
+            <span class="hero__subtitle">Diseño y construcción de una estación clasificadora de materiales</span>
+          </h1>
+          <p class="lead">
+            Un prototipo de laboratorio que mueve piezas por una banda transportadora, las «lee» con dos sensores
+            y decide si son metálicas o no metálicas con un controlador tipo PLC fabricado por el equipo.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#funcionamiento">Ver cómo funciona</a>
+            <a class="btn btn--ghost" href="docs/proyecto-integrador-estacion-mps.pdf" download>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Descargar informe <span class="btn__meta">(PDF, 0,8 MB)</span>
+            </a>
+          </div>
+
+          <div class="panel status-panel" aria-labelledby="estado-resumen">
+            <h2 class="panel__label" id="estado-resumen">Estado actual del prototipo</h2>
+            <ul class="status-list">
+              <li>
+                <span class="lamp lamp--ok" aria-hidden="true"></span>
+                <span><strong>Verificado:</strong> banda a 5&nbsp;V, detección metálico / no metálico, decisión y señalización.</span>
+              </li>
+              <li>
+                <span class="lamp lamp--pending" aria-hidden="true"></span>
+                <span><strong>Pendiente:</strong> pruebas formales de precisión y tiempos. Aún no hay cifras medidas.</span>
+              </li>
+              <li>
+                <span class="lamp lamp--future" aria-hidden="true"></span>
+                <span><strong>Siguiente fase:</strong> sistema neumático de separación, diseñado en papel y sin instalar.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <figure class="hero__figure">
+          <a class="zoom" href="assets/img/estacion-banda-sensores-servos.png" data-lightbox
+             data-caption="El prototipo en el laboratorio: banda transportadora, soportes de sensores y brazos de desvío.">
+            <img src="assets/img/estacion-banda-sensores-servos.png" width="409" height="546"
+                 alt="Prototipo de la estación sobre una mesa de laboratorio: una banda transportadora negra de eslabones, dos soportes verticales con sensores cilíndricos y dos brazos metálicos cruzados sobre la banda.">
+            <span class="visually-hidden">Ampliar imagen</span>
+          </a>
+          <figcaption>El prototipo en el laboratorio de Automatización Industrial.</figcaption>
+        </figure>
+      </div>
+
+      <div class="container">
+        <dl class="spec-strip">
+          <div><dt>Institución</dt><dd>Universidad de San Buenaventura</dd></div>
+          <div><dt>Programa</dt><dd>Tecnología en Automatización Industrial</dd></div>
+          <div><dt>Tipo</dt><dd>Prototipo a escala de laboratorio</dd></div>
+          <div><dt>Docente asesor</dt><dd>Fabian Orlando Garcia</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ PROBLEMA ============ -->
+    <section class="section" id="problema" aria-labelledby="h-problema">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__tag"><span>01</span> El problema</p>
+          <h2 id="h-problema">Clasificar a mano es lento, y aprender solo en simulador se queda corto</h2>
+        </header>
+
+        <div class="grid-2 reveal">
+          <article class="card">
+            <h3>En la industria</h3>
+            <p>
+              En muchos procesos industriales y de reciclaje la clasificación todavía se hace a mano. Es lenta,
+              depende demasiado de quien la hace y se vuelve costosa cuando el volumen crece: una persona se cansa,
+              se distrae, y dos personas pueden clasificar la misma pieza de forma distinta.
+            </p>
+          </article>
+          <article class="card">
+            <h3>En el aula</h3>
+            <p>
+              La teoría de la automatización se explica bien en clase, pero no siempre hay un equipo real donde
+              practicarla. Simular ayuda, pero no es lo mismo que ver una banda moverse, ajustar un sensor que no
+              detecta bien o corregir un programa que no hace lo que uno esperaba.
+            </p>
+          </article>
+        </div>
+
+        <figure class="question reveal">
+          <figcaption class="question__label">Pregunta de investigación</figcaption>
+          <blockquote>
+            <p>
+              ¿Cómo diseñar y construir una estación MPS que clasifique materiales de forma automática, confiable y
+              segura, y que además funcione como herramienta de aprendizaje en el laboratorio de Automatización Industrial?
+            </p>
+          </blockquote>
+        </figure>
+
+        <div class="grid-2 reveal">
+          <div>
+            <h3>Objetivo general</h3>
+            <p>
+              Diseñar y construir una estación MPS funcional para la clasificación automática de materiales, que sirva
+              como herramienta de aprendizaje en el programa de Tecnología en Automatización Industrial.
+            </p>
+            <h3>Objetivos específicos</h3>
+            <ul class="list">
+              <li>Diseñar una estructura mecánica y un sistema de transporte estables, seguros y fáciles de mantener.</li>
+              <li>Seleccionar e instalar sensores, actuadores y controlador adecuados para las piezas de prueba.</li>
+              <li>Programar la lógica que detecta, clasifica y separa las piezas de forma repetible.</li>
+              <li>Integrar los sistemas mecánico, neumático, eléctrico y de control en un solo equipo.</li>
+              <li>Probar la estación en el laboratorio y corregir las fallas que aparezcan.</li>
+              <li>Documentar el trabajo para que otros estudiantes puedan usarlo y mejorarlo.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Alcance y limitaciones</h3>
+            <ul class="list">
+              <li>Es un prototipo a escala de laboratorio, no una línea industrial: trabaja con piezas de prueba, a velocidad controlada y en un entorno académico.</li>
+              <li>Clasifica según lo que detectan los sensores instalados (metálico / no metálico). No pretende identificar cualquier material.</li>
+              <li>No se hizo un estudio económico de producción en serie ni una validación en una empresa real.</li>
+              <li>Las pruebas se hicieron con las condiciones y los materiales disponibles durante el semestre.</li>
+            </ul>
+            <h3>De dónde partimos</h3>
+            <p>
+              Revisamos estaciones MPS comerciales de entrenamiento, clasificadores con Arduino y sensores inductivos y
+              capacitivos, y prototipos con visión artificial. Este proyecto no inventa la clasificación automática:
+              su aporte es una versión accesible, modular y pensada para enseñar, con controlador propio.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FUNCIONAMIENTO ============ -->
+    <section class="section section--alt" id="funcionamiento" aria-labelledby="h-funcionamiento">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__tag"><span>02</span> Cómo funciona</p>
+          <h2 id="h-funcionamiento">Medir, decidir, actuar</h2>
+          <p class="section__intro">
+            Todo sistema automatizado tiene algo que mide, algo que decide y algo que actúa. En la estación,
+            la pieza recorre ese camino en cuatro pasos.
+          </p>
+        </header>
+
+        <div class="flow reveal">
+          <figure class="flow__diagram">
+            <svg viewBox="0 0 600 300" role="img" aria-labelledby="svg-flujo-t svg-flujo-d" class="diagram">
+              <title id="svg-flujo-t">Esquema de la estación clasificadora</title>
+              <desc id="svg-flujo-d">Una pieza avanza por la banda transportadora (1), pasa bajo dos sensores (2) conectados al controlador (3), que ordena al mecanismo de desvío (4) enviarla al contenedor de piezas metálicas o al de no metálicas. El desvío aparece con línea discontinua porque la separación física aún no está verificada.</desc>
+
+              <!-- Banda -->
+              <g class="d-stroke">
+                <rect x="40" y="182" width="390" height="28" rx="14"/>
+                <circle cx="54" cy="196" r="8"/>
+                <circle cx="416" cy="196" r="8"/>
+                <path d="M80 210v52M390 210v52M60 262h350"/>
+              </g>
+              <path class="d-belt" d="M70 182h330"/>
+
+              <!-- Piezas -->
+              <rect class="d-piece-metal" x="84" y="156" width="26" height="26" rx="3"/>
+              <rect class="d-piece-plain" x="310" y="156" width="26" height="26" rx="3"/>
+              <path class="d-arrow" d="M124 169h44m0 0l-8-6m8 6l-8 6"/>
+
+              <!-- Sensores -->
+              <g class="d-stroke">
+                <path d="M205 96v22M263 96v22"/>
+              </g>
+              <rect class="d-sensor" x="196" y="118" width="18" height="26" rx="3"/>
+              <rect class="d-sensor" x="254" y="118" width="18" height="26" rx="3"/>
+              <path class="d-sense" d="M199 148l-6 30M211 148l6 30M257 148l-6 30M269 148l6 30"/>
+
+              <!-- Cableado sensores → controlador -->
+              <path class="d-wire" d="M205 96V52h105M263 96V70h47"/>
+
+              <!-- Controlador -->
+              <rect class="d-controller" x="310" y="30" width="130" height="62" rx="6"/>
+              <circle class="d-led d-led--ok" cx="334" cy="50" r="6"/>
+              <circle class="d-led d-led--warn" cx="356" cy="50" r="6"/>
+              <path class="d-stroke d-thin" d="M326 72h98M326 80h70"/>
+
+              <!-- Desvío (previsto / no verificado: discontinuo) -->
+              <path class="d-planned" d="M420 92v48"/>
+              <path class="d-planned d-planned--arm" d="M420 146l34 26"/>
+              <circle class="d-pivot" cx="420" cy="144" r="5"/>
+              <path class="d-planned" d="M444 190q40 6 52 30M446 180q90 0 116 38"/>
+
+              <!-- Contenedores -->
+              <g class="d-stroke">
+                <path d="M470 226v48h54v-48M536 226v48h54v-48"/>
+              </g>
+              <text class="d-text" x="497" y="260" text-anchor="middle">M</text>
+              <text class="d-text" x="563" y="260" text-anchor="middle">NM</text>
+
+              <!-- Llamadas numeradas -->
+              <g class="d-callout">
+                <circle cx="240" cy="240" r="17"/><text x="240" y="247" text-anchor="middle">1</text>
+                <circle cx="160" cy="118" r="17"/><text x="160" y="125" text-anchor="middle">2</text>
+                <circle cx="474" cy="60" r="17"/><text x="474" y="67" text-anchor="middle">3</text>
+                <circle cx="490" cy="150" r="17"/><text x="490" y="157" text-anchor="middle">4</text>
+              </g>
+            </svg>
+            <figcaption>
+              Esquema propio del recorrido de una pieza. M: contenedor de metálicas; NM: de no metálicas.
+              La línea discontinua indica la parte que todavía no está verificada.
+            </figcaption>
+          </figure>
+
+          <ol class="flow__steps">
+            <li>
+              <span class="step-num" aria-hidden="true">1</span>
+              <div>
+                <h3>Banda transportadora</h3>
+                <p>Lleva la pieza desde la entrada hasta la zona de lectura. Funciona a 5&nbsp;V y usa guías laterales para que cada pieza llegue en una posición parecida.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-num" aria-hidden="true">2</span>
+              <div>
+                <h3>Sensores</h3>
+                <p>Un sensor inductivo (solo metales) y uno capacitivo (metales y no metales) leen la pieza sin tocarla.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-num" aria-hidden="true">3</span>
+              <div>
+                <h3>Controlador</h3>
+                <p>El controlador tipo PLC basado en Arduino combina las dos señales, decide el grupo de la pieza y lo señaliza.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-num step-num--planned" aria-hidden="true">4</span>
+              <div>
+                <h3>Desvío <span class="badge badge--pending">No verificado</span></h3>
+                <p>Según los diagramas del anexo, dos servomotores MG996R empujan la pieza a su contenedor. El diseño final prevé cilindros neumáticos, que aún no están instalados.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="grid-2 grid-2--top reveal">
+          <div>
+            <h3>Lógica de clasificación</h3>
+            <div class="table-wrap" role="region" aria-label="Tabla de lógica de clasificación" tabindex="0">
+              <table class="table">
+                <caption>Decisión del controlador según la lectura de los dos sensores</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Sensor inductivo</th>
+                    <th scope="col">Sensor capacitivo</th>
+                    <th scope="col">Resultado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="io io--on">Sí</span></td>
+                    <td><span class="io">Indiferente</span></td>
+                    <th scope="row">Pieza metálica</th>
+                  </tr>
+                  <tr>
+                    <td><span class="io io--off">No</span></td>
+                    <td><span class="io io--on">Sí</span></td>
+                    <th scope="row">Pieza no metálica</th>
+                  </tr>
+                  <tr>
+                    <td><span class="io io--off">No</span></td>
+                    <td><span class="io io--off">No</span></td>
+                    <th scope="row">Sin pieza o fuera de rango: el sistema espera la siguiente</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">
+              Con una pieza metálica es normal que el capacitivo también se active; la decisión la toma el inductivo.
+            </p>
+          </div>
+
+          <div>
+            <h3>Ciclo del programa</h3>
+            <ol class="list list--ordered">
+              <li>Espera a que el sensor de presencia detecte una pieza.</li>
+              <li>Lee los sensores de clasificación y decide a qué grupo pertenece.</li>
+              <li>Activa la salida correspondiente durante el tiempo necesario.</li>
+              <li>Cuenta la pieza y vuelve a esperar la siguiente.</li>
+              <li>Si algo se atasca o un sensor no responde, detiene el proceso y avisa con una señal.</li>
+            </ol>
+            <p class="note">
+              El informe indica que la lógica se trabajó en Ladder con OpenPLC. El diagrama de flujo del anexo está en la
+              <a href="#galeria">galería</a>.
+            </p>
+          </div>
+        </div>
+
+        <details class="disclosure reveal">
+          <summary>Calibración de los sensores, paso a paso</summary>
+          <div class="disclosure__body grid-2 grid-2--top">
+            <ol class="list list--ordered">
+              <li>Limpiar la zona de lectura: sin polvo, viruta ni piezas pegadas.</li>
+              <li>Fijar la distancia sensor-pieza con una pieza de prueba y marcar esa posición en el soporte.</li>
+              <li>Girar despacio el potenciómetro del capacitivo hasta que detecte la pieza no metálica de forma estable, y probar 10 veces seguidas.</li>
+              <li>Probar con la pieza metálica: el inductivo debe activarse siempre.</li>
+              <li>Probar con la banda en movimiento; si la lectura falla, bajar un poco la velocidad o acercar la guía lateral.</li>
+              <li>Registrar la distancia final y la posición del potenciómetro en la tabla de calibración.</li>
+            </ol>
+            <div>
+              <h4>Errores típicos y cómo se corrigen</h4>
+              <dl class="fixes">
+                <dt>La pieza pasa muy lejos del sensor</dt>
+                <dd>Guías laterales y soporte fijo.</dd>
+                <dt>El capacitivo se dispara con la estructura o con la mano</dt>
+                <dd>Alejarlo del metal cercano y recalibrar.</dd>
+                <dt>Piezas húmedas o sucias</dt>
+                <dd>Usar piezas limpias y secas en las pruebas.</dd>
+                <dt>Lecturas intermitentes por vibración</dt>
+                <dd>Apretar soportes y revisar que la banda esté tensa y alineada.</dd>
+              </dl>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ COMPONENTES ============ -->
+    <section class="section" id="componentes" aria-labelledby="h-componentes">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__tag"><span>03</span> Componentes y arquitectura</p>
+          <h2 id="h-componentes">Cinco sistemas en un solo equipo</h2>
+        </header>
+
+        <div class="cards-3 reveal">
+          <article class="card card--module">
+            <p class="card__code">M · Mecánica</p>
+            <h3>Estructura</h3>
+            <ul class="list">
+              <li><strong>Aluminio</strong> en el bastidor: liviano, rígido y ajustable sin soldar.</li>
+              <li><strong>MDF</strong> en bases y paneles: económico y fácil de cortar.</li>
+              <li><strong>Impresión 3D</strong> para soportes de sensores, guías y acoples a medida.</li>
+            </ul>
+            <p class="note">Los módulos se pueden desmontar para mantenimiento. El plano del anexo, con cotas estimadas, indica una base de 460 × 280&nbsp;mm.</p>
+          </article>
+
+          <article class="card card--module">
+            <p class="card__code">T · Transporte</p>
+            <h3>Banda transportadora</h3>
+            <ul class="list">
+              <li>Funciona a <strong>5&nbsp;V</strong>: segura para el laboratorio y compatible con la electrónica de control.</li>
+              <li>Guías laterales, varias impresas en 3D, para que las piezas no se salgan.</li>
+              <li>Velocidad ajustada para que los sensores alcancen a leer sin frenar el proceso.</li>
+            </ul>
+            <p class="note">Según los diagramas del anexo, el motor se maneja con un driver L298N.</p>
+          </article>
+
+          <article class="card card--module">
+            <p class="card__code">S · Sensores</p>
+            <h3>Detección</h3>
+            <ul class="list">
+              <li><strong>Inductivo LJ12A3-4-Z/BX:</strong> detecta solo metales, sin contacto. Rápido y robusto.</li>
+              <li><strong>Capacitivo:</strong> detecta metales y no metales (plástico, madera, papel). Sensible a humedad, polvo y distancia: exige calibración cuidadosa.</li>
+            </ul>
+          </article>
+
+          <article class="card card--module">
+            <p class="card__code">C · Control</p>
+            <h3>Controlador tipo PLC propio</h3>
+            <ul class="list">
+              <li>Fabricado por el equipo sobre Arduino; la primera versión se probó en Arduino UNO.</li>
+              <li>Según los diagramas del anexo: Arduino Mega (banda y desvío) y Arduino Nano (lectura de sensores) comunicados por serial, con módulo de 4 relés.</li>
+              <li>Cableado por bloques, con tablero ordenado y rotulado.</li>
+            </ul>
+            <p class="note note--warn">
+              <strong>Importante:</strong> no es un PLC industrial certificado. Sirve para el laboratorio y el aprendizaje,
+              sin las certificaciones ni la robustez de un PLC comercial.
+            </p>
+          </article>
+
+          <article class="card card--module">
+            <p class="card__code">A · Actuación</p>
+            <h3>Desvío de piezas</h3>
+            <ul class="list">
+              <li>Los diagramas y la tabla de costos del anexo muestran dos servomotores MG996R como mecanismo de desvío.</li>
+              <li>El informe no documenta pruebas de separación física; por eso aquí no se cuenta como verificada.</li>
+            </ul>
+            <p class="note">El sistema neumático previsto se describe en <a href="#proximos-pasos">próximos pasos</a>.</p>
+          </article>
+
+          <article class="card card--module">
+            <p class="card__code">P · Protección</p>
+            <h3>Seguridad</h3>
+            <ul class="list">
+              <li>Parada de emergencia accesible que corta la banda.</li>
+              <li>Guardas en los extremos y guías que alejan las manos.</li>
+              <li>Cableado amarrado y rotulado, sin cables sobre la banda.</li>
+            </ul>
+            <p class="note">Con banda a 5&nbsp;V y sin neumática, el riesgo principal es mecánico y de uso.</p>
+          </article>
+        </div>
+
+        <div class="grid-2 grid-2--top reveal">
+          <div class="panel">
+            <h3 class="panel__label">Reglas de uso en el laboratorio</h3>
+            <ol class="list list--ordered">
+              <li>Revisar la parada de emergencia antes de encender.</li>
+              <li>No meter las manos en la banda en movimiento.</li>
+              <li>Mantener la zona libre de herramientas y piezas sueltas.</li>
+              <li>Si algo se atasca: parar, apagar y luego despejar. Nunca con la banda andando.</li>
+            </ol>
+          </div>
+          <div class="panel">
+            <h3 class="panel__label">Normas de referencia</h3>
+            <ul class="list">
+              <li><strong>ISO 12100:</strong> identificación y reducción de riesgos.</li>
+              <li><strong>ISO 13849:</strong> confiabilidad de los sistemas de control.</li>
+              <li><strong>IEC 60204-1:</strong> seguridad eléctrica de máquinas.</li>
+              <li><strong>Decreto 1072 de 2015</strong> y <strong>Resolución 2400 de 1979</strong> (Colombia).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ METODOLOGÍA ============ -->
+    <section class="section section--alt" id="metodologia" aria-labelledby="h-metodologia">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__tag"><span>04</span> Metodología</p>
+          <h2 id="h-metodologia">Armar, probar, corregir y volver a probar</h2>
+          <p class="section__intro">
+            Trabajamos en seis fases, pero no en línea recta: cuando algo fallaba en la prueba, volvíamos al diseño y lo ajustábamos.
+          </p>
+        </header>
+
+        <ol class="phases reveal">
+          <li>
+            <p class="phases__num">Fase 1</p>
+            <h3>Investigar y definir</h3>
+            <p>Antecedentes, tipo de piezas a clasificar y alcance: un prototipo de laboratorio, no una línea industrial.</p>
+          </li>
+          <li>
+            <p class="phases__num">Fase 2</p>
+            <h3>Diseñar</h3>
+            <p>Bocetos y planos, selección de sensores, actuadores y controlador, y criterios de seguridad.</p>
+          </li>
+          <li>
+            <p class="phases__num">Fase 3</p>
+            <h3>Construir</h3>
+            <p>Estructura en aluminio y MDF, piezas impresas en 3D, montaje de la banda, sensores y cableado.</p>
+          </li>
+          <li>
+            <p class="phases__num">Fase 4</p>
+            <h3>Programar</h3>
+            <p>Lógica por bloques: detección, clasificación, activación de salidas y manejo de errores o atascos.</p>
+          </li>
+          <li>
+            <p class="phases__num">Fase 5</p>
+            <h3>Probar y ajustar</h3>
+            <p>Piezas de prueba, observación de fallas y ajuste de sensores, tiempos y velocidad.</p>
+          </li>
+          <li>
+            <p class="phases__num">Fase 6</p>
+            <h3>Documentar</h3>
+            <p>Diseño final, cambios realizados, resultados y recomendaciones para quien continúe.</p>
+          </li>
+        </ol>
+
+        <h3 class="reveal" id="h-cronograma">Cronograma: un semestre de 16 semanas</h3>
+        <ol class="weeks reveal" aria-labelledby="h-cronograma">
+          <li><span class="weeks__n">Semana 1</span> Conformación del equipo, idea y alcance.</li>
+          <li><span class="weeks__n">Semana 2</span> Revisión de antecedentes y marco teórico.</li>
+          <li><span class="weeks__n">Semana 3</span> Piezas de prueba y criterios de clasificación.</li>
+          <li><span class="weeks__n">Semana 4</span> Diseño mecánico: estructura y banda.</li>
+          <li><span class="weeks__n">Semana 5</span> Selección de sensores y controlador.</li>
+          <li><span class="weeks__n">Semana 6</span> Diseño eléctrico, electrónico y neumático (en papel).</li>
+          <li><span class="weeks__n">Semana 7</span> Compra y consecución de materiales.</li>
+          <li><span class="weeks__n">Semana 8</span> Construcción: aluminio y MDF.</li>
+          <li><span class="weeks__n">Semana 9</span> Impresión 3D y montaje de la banda a 5&nbsp;V.</li>
+          <li><span class="weeks__n">Semana 10</span> Fabricación del PLC propio sobre Arduino UNO.</li>
+          <li><span class="weeks__n">Semana 11</span> Programación: detectar, clasificar y señalizar.</li>
+          <li><span class="weeks__n">Semana 12</span> Implementación de Arduino UNO.</li>
+          <li><span class="weeks__n">Semana 13</span> Pruebas 1: calibración de sensores.</li>
+          <li><span class="weeks__n">Semana 14</span> Pruebas 2: clasificación completa y ajustes.</li>
+          <li><span class="weeks__n">Semana 15</span> Documento final y manual de uso.</li>
+          <li><span class="weeks__n">Semana 16</span> Ajustes finales y sustentación.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ GALERÍA ============ -->
+    <section class="section" id="galeria" aria-labelledby="h-galeria">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__tag"><span>05</span> Galería</p>
+          <h2 id="h-galeria">Montaje y diagramas</h2>
+          <p class="section__intro">Imágenes de los anexos del informe. Selecciona cualquiera para ampliarla.</p>
+        </header>
+
+        <h3 class="reveal">Fotografías del montaje</h3>
+        <ul class="gallery reveal">
+          <li>
+            <figure>
+              <a class="zoom" href="assets/img/estacion-banda-sensores-servos.png" data-lightbox
+                 data-caption="La estación: banda transportadora, soportes de sensores y brazos de desvío.">
+                <img class="thumb thumb--photo" src="assets/img/estacion-banda-sensores-servos.png" width="409" height="546" loading="lazy"
+                     alt="Vista superior de la estación: banda transportadora negra de eslabones, dos soportes con sensores cilíndricos a un lado y dos brazos metálicos unidos a servomotores que cruzan la banda.">
+                <span class="visually-hidden">Ampliar imagen</span>
+              </a>
+              <figcaption>La estación: banda, sensores y brazos de desvío.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <a class="zoom" href="assets/img/tablero-control-vista-frontal.png" data-lightbox
+                 data-caption="Tablero de control: fuente, placas Arduino sobre adaptadores de borneras, driver L298N, módulo de 4 relés y borneras en riel DIN.">
+                <img class="thumb thumb--photo" src="assets/img/tablero-control-vista-frontal.png" width="796" height="448" loading="lazy"
+                     alt="Interior del gabinete de control: sobre una placa de madera, un módulo de fuente, dos placas Arduino azules montadas en adaptadores de borneras verdes y un driver de motor rojo; debajo, un módulo azul de cuatro relés y una fila de borneras grises en riel DIN, con cableado en canaletas.">
+                <span class="visually-hidden">Ampliar imagen</span>
+              </a>
+              <figcaption>Tablero de control, vista frontal.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <a class="zoom" href="assets/img/tablero-control-vista-lateral.png" data-lightbox
+                 data-caption="El tablero de control visto de lado, con la estación al fondo.">
+                <img class="thumb thumb--photo" src="assets/img/tablero-control-vista-lateral.png" width="407" height="542" loading="lazy"
+                     alt="Vista lateral del gabinete de control abierto, con las placas Arduino, el módulo de relés y las borneras cableadas; al fondo se ve parte de la estación y un sensor.">
+                <span class="visually-hidden">Ampliar imagen</span>
+              </a>
+              <figcaption>Tablero de control, vista lateral.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <a class="zoom" href="assets/img/tarjeta-controlador-arduino-nano.png" data-lightbox
+                 data-caption="Tarjeta electrónica con Arduino Nano, optoacopladores, relevos y borneras, encendida durante una prueba.">
+                <img class="thumb thumb--photo" src="assets/img/tarjeta-controlador-arduino-nano.png" width="408" height="545" loading="lazy"
+                     alt="Tarjeta de circuito verde con un Arduino Nano conectado por USB, una fila de optoacopladores con LED verdes encendidos, resistencias, relevos azules y borneras.">
+                <span class="visually-hidden">Ampliar imagen</span>
+              </a>
+              <figcaption>Tarjeta electrónica con Arduino Nano, en prueba.</figcaption>
+            </figure>
+          </li>
+        </ul>
+
+        <h3 class="reveal">Planos y diagramas del anexo</h3>
+        <ul class="gallery reveal">
+          <li>
+            <figure>
+              <a class="zoom" href="assets/img/planos-dimensiones-estructura.png" data-lightbox
+                 data-caption="Anexo A. Planos y dimensiones de la estructura. Cotas en milímetros, estimadas a partir de fotografías.">
+                <img class="thumb thumb--doc" src="assets/img/planos-dimensiones-estructura.png" width="698" height="491" loading="lazy"
+                     alt="Planos de la estructura en cuatro vistas: gabinete de control de 340 por 260 milímetros, vista superior con banda de 350 por 95 milímetros y túnel, vista lateral con base de 460 milímetros y dos soportes de sensor, y detalle de sensor y servomotor.">
+                <span class="visually-hidden">Ampliar imagen</span>
+              </a>
+              <figcaption>Anexo A · Planos y dimensiones (cotas estimadas).</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <a class="zoom" href="assets/img/diagrama-electrico-bloques.png" data-lightbox
+                 data-caption="Anexo B. Diagrama eléctrico por bloques: fuentes, Arduino Mega y Nano, driver L298N, módulo de relés, servomotores y sensores.">
+                <img class="thumb thumb--doc" src="assets/img/diagrama-electrico-bloques.png" width="673" height="528" loading="lazy"
+                     alt="Diagrama eléctrico por bloques: fuente de 12 voltios y fuente USB alimentan un Arduino Mega y un Arduino Nano enlazados por serial; el Mega maneja el driver L298N del motor de la banda y dos servomotores MG996R; el Nano lee los sensores inductivo y capacitivo; incluye un módulo de cuatro relés.">
+                <span class="visually-hidden">Ampliar imagen</span>
+              </a>
+              <figcaption>Anexo B · Diagrama eléctrico por bloques.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <a class="zoom" href="assets/img/diagrama-electrico-esquematico.png" data-lightbox
+                 data-caption="Anexo B. Diagrama eléctrico en estilo esquemático, con buses de alimentación y conexiones entre módulos.">
+                <img class="thumb thumb--doc" src="assets/img/diagrama-electrico-esquematico.png" width="769" height="513" loading="lazy"
+                     alt="Esquemático eléctrico: fuente de alimentación con salidas de 12 y 5 voltios, Arduino Mega y Arduino Nano, driver L298N conectado al motor de la banda, módulo de cuatro relés, dos servomotores MG996R, sensores inductivo y capacitivo y un bloque de borneras con tierra común.">
+                <span class="visually-hidden">Ampliar imagen</span>
+              </a>
+              <figcaption>Anexo B · Diagrama eléctrico esquemático.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <a class="zoom" href="assets/img/diagrama-flujo-clasificacion.png" data-lightbox
+                 data-caption="Anexo C. Diagrama de flujo de la clasificación por sensores y servomotores.">
+                <img class="thumb thumb--doc" src="assets/img/diagrama-flujo-clasificacion.png" width="613" height="962" loading="lazy"
+                     alt="Diagrama de flujo: inicio, inicialización de placas, servos en reposo y banda en marcha; si el sensor 1 detecta una pieza se esperan 200 milisegundos y se lee el sensor 2; si es metal, un servo gira 90 grados y la empuja a la caja de metal, si no, el otro servo la empuja a la caja de no metal; los servos vuelven a reposo, se incrementa el contador y el ciclo se repite.">
+                <span class="visually-hidden">Ampliar imagen</span>
+              </a>
+              <figcaption>Anexo C · Diagrama de flujo.</figcaption>
+            </figure>
+          </li>
+        </ul>
+        <p class="note reveal">
+          Los diagramas del anexo están rotulados como «MPC» y describen la versión con servomotores; se reproducen tal como aparecen en el informe.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ ESTADO ============ -->
+    <section class="section section--alt" id="estado" aria-labelledby="h-estado">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__tag"><span>06</span> Estado y resultados</p>
+          <h2 id="h-estado">Qué funciona hoy y qué falta</h2>
+          <p class="section__intro">
+            La estación hoy detecta y decide. La separación física completa llega en la siguiente fase.
+            Por eso no presentamos un porcentaje de precisión: dar un número sin haber probado el ciclo completo sería engañoso.
+          </p>
+        </header>
+
+        <div class="cards-3 reveal">
+          <article class="card state state--ok">
+            <h3><span class="lamp lamp--ok" aria-hidden="true"></span> Verificado</h3>
+            <ul class="list">
+              <li>La banda mueve las piezas de forma continua a 5&nbsp;V.</li>
+              <li>Los sensores detectan presencia y distinguen metálico / no metálico cuando están calibrados y la pieza pasa por la zona de lectura.</li>
+              <li>El controlador decide y señaliza correctamente en esas condiciones.</li>
+            </ul>
+          </article>
+          <article class="card state state--pending">
+            <h3><span class="lamp lamp--pending" aria-hidden="true"></span> Pendiente de medir</h3>
+            <ul class="list">
+              <li>La tasa de aciertos del ciclo completo (detectar y desviar).</li>
+              <li>Tiempos por pieza y piezas por minuto.</li>
+              <li>Pruebas con más tipos de piezas.</li>
+              <li>Documentación completa de planos y programa.</li>
+            </ul>
+          </article>
+          <article class="card state state--future">
+            <h3><span class="lamp lamp--future" aria-hidden="true"></span> Siguiente fase</h3>
+            <ul class="list">
+              <li>Sistema neumático de separación: diseñado en papel, sin instalar y sin probar.</li>
+              <li>Separación física automática de las piezas en sus contenedores.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="panel reveal">
+          <h3 class="panel__label">Análisis</h3>
+          <p>
+            La clasificación funciona cuando se cumplen tres condiciones: <strong>sensor calibrado</strong>,
+            <strong>pieza bien posicionada</strong> y <strong>velocidad adecuada</strong>. Si una falla, la lectura falla.
+            La parte más difícil no fue programar, sino ajustar: el código es corto; lo largo fue calibrar, alinear,
+            apretar soportes y volver a probar.
+          </p>
+        </div>
+
+        <h3 class="reveal" id="protocolo">Protocolo de pruebas propuesto</h3>
+        <p class="reveal">Estas cinco pruebas están definidas pero aún no tienen resultados registrados. Son el plan para poder hablar de precisión con evidencia.</p>
+        <div class="table-wrap reveal" role="region" aria-label="Tabla del protocolo de pruebas propuesto" tabindex="0">
+          <table class="table">
+            <caption>Protocolo de pruebas propuesto (sin resultados medidos todavía)</caption>
+            <thead>
+              <tr>
+                <th scope="col">Prueba</th>
+                <th scope="col">Procedimiento</th>
+                <th scope="col">Qué se registra</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1 · Detección</th>
+                <td>Pasar 30 piezas metálicas y 30 no metálicas, una por una.</td>
+                <td>Cuántas detectó bien cada sensor.</td>
+              </tr>
+              <tr>
+                <th scope="row">2 · Repetibilidad</th>
+                <td>Pasar la misma pieza 20 veces.</td>
+                <td>Cuántas veces dio el mismo resultado.</td>
+              </tr>
+              <tr>
+                <th scope="row">3 · En movimiento</th>
+                <td>Pasar 30 piezas con la banda andando.</td>
+                <td>Aciertos en movimiento frente a en parado.</td>
+              </tr>
+              <tr>
+                <th scope="row">4 · Velocidad</th>
+                <td>Medir el tiempo de 20 piezas seguidas.</td>
+                <td>Piezas por minuto y tiempo por pieza.</td>
+              </tr>
+              <tr>
+                <th scope="row">5 · Fallas</th>
+                <td>Probar con la pieza fuera de posición, sucia o muy lejos.</td>
+                <td>Qué error apareció y cómo se corrigió.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COSTOS ============ -->
+    <section class="section" id="costos" aria-labelledby="h-costos">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__tag"><span>07</span> Costos</p>
+          <h2 id="h-costos">Cuánto costó construirla</h2>
+        </header>
+
+        <div class="grid-2 grid-2--top reveal">
+          <div>
+            <p class="figure-number">
+              <span class="figure-number__value">$2.500.000 <abbr title="pesos colombianos">COP</abbr></span>
+              <span class="figure-number__label">Total del proyecto según la tabla de costos del anexo E</span>
+            </p>
+            <div class="table-wrap" role="region" aria-label="Tabla de costos por categoría" tabindex="0">
+              <table class="table table--numeric">
+                <caption>Distribución del costo por categoría (anexo E, pesos colombianos)</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Participación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Estructura</th><td>$660.000</td><td><span class="bar" style="--v: 26.4" aria-hidden="true"></span>26,4&nbsp;%</td></tr>
+                  <tr><th scope="row">Electrónica</th><td>$495.000</td><td><span class="bar" style="--v: 19.8" aria-hidden="true"></span>19,8&nbsp;%</td></tr>
+                  <tr><th scope="row">Actuadores</th><td>$430.000</td><td><span class="bar" style="--v: 17.2" aria-hidden="true"></span>17,2&nbsp;%</td></tr>
+                  <tr><th scope="row">Mano de obra</th><td>$400.000</td><td><span class="bar" style="--v: 16" aria-hidden="true"></span>16,0&nbsp;%</td></tr>
+                  <tr><th scope="row">Otros</th><td>$310.000</td><td><span class="bar" style="--v: 12.4" aria-hidden="true"></span>12,4&nbsp;%</td></tr>
+                  <tr><th scope="row">Sensores</th><td>$205.000</td><td><span class="bar" style="--v: 8.2" aria-hidden="true"></span>8,2&nbsp;%</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><th scope="row">Total</th><td>$2.500.000</td><td>100&nbsp;%</td></tr>
+                </tfoot>
+              </table>
+            </div>
+            <p class="note">
+              La tabla del anexo aclara que son valores estimados de referencia, no facturas.
+            </p>
+          </div>
+
+          <figure class="doc-figure">
+            <a class="zoom" href="assets/img/tabla-costos-proyecto.png" data-lightbox
+               data-caption="Anexo E. Tabla de costos del proyecto: 14 partidas, total $2.500.000 COP.">
+              <img src="assets/img/tabla-costos-proyecto.png" width="954" height="706" loading="lazy"
+                   alt="Tabla de costos del proyecto con 14 partidas agrupadas en electrónica, sensores, actuadores, estructura, otros y mano de obra; total del proyecto 2.500.000 pesos colombianos.">
+              <span class="visually-hidden">Ampliar imagen</span>
+            </a>
+            <figcaption>Anexo E · Tabla de costos original, con el detalle de las 14 partidas.</figcaption>
+          </figure>
+        </div>
+
+        <details class="disclosure reveal">
+          <summary>Ver el detalle de las 14 partidas como tabla</summary>
+          <div class="disclosure__body">
+            <div class="table-wrap" role="region" aria-label="Tabla de costos detallada" tabindex="0">
+              <table class="table table--numeric table--dense">
+                <caption>Detalle de costos por ítem (anexo E, pesos colombianos)</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Ítem</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Cant.</th>
+                    <th scope="col">Valor unitario</th>
+                    <th scope="col">Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Arduino Mega 2560</th><td>Electrónica</td><td>1</td><td>$180.000</td><td>$180.000</td></tr>
+                  <tr><th scope="row">Arduino Nano</th><td>Electrónica</td><td>1</td><td>$65.000</td><td>$65.000</td></tr>
+                  <tr><th scope="row">Driver L298N</th><td>Electrónica</td><td>1</td><td>$45.000</td><td>$45.000</td></tr>
+                  <tr><th scope="row">Módulo de relés ×4 + borneras</th><td>Electrónica</td><td>1</td><td>$85.000</td><td>$85.000</td></tr>
+                  <tr><th scope="row">Fuente 12 V 5 A + USB 5 V</th><td>Electrónica</td><td>1</td><td>$120.000</td><td>$120.000</td></tr>
+                  <tr><th scope="row">Sensor inductivo M12</th><td>Sensores</td><td>1</td><td>$110.000</td><td>$110.000</td></tr>
+                  <tr><th scope="row">Sensor capacitivo</th><td>Sensores</td><td>1</td><td>$95.000</td><td>$95.000</td></tr>
+                  <tr><th scope="row">Servomotor MG996R</th><td>Actuadores</td><td>2</td><td>$55.000</td><td>$110.000</td></tr>
+                  <tr><th scope="row">Motor DC + banda transportadora 350 mm</th><td>Actuadores</td><td>1</td><td>$320.000</td><td>$320.000</td></tr>
+                  <tr><th scope="row">Base metálica, soportes, cubierta y tornillería</th><td>Estructura</td><td>1</td><td>$380.000</td><td>$380.000</td></tr>
+                  <tr><th scope="row">Gabinete metálico + placa de madera + canaleta + riel DIN</th><td>Estructura</td><td>1</td><td>$280.000</td><td>$280.000</td></tr>
+                  <tr><th scope="row">Cableado, conectores, prensaestopas y consumibles</th><td>Otros</td><td>1</td><td>$150.000</td><td>$150.000</td></tr>
+                  <tr><th scope="row">Impresión del documento, planos y transporte</th><td>Otros</td><td>1</td><td>$160.000</td><td>$160.000</td></tr>
+                  <tr><th scope="row">Montaje, programación y pruebas</th><td>Mano de obra</td><td>1</td><td>$400.000</td><td>$400.000</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><th scope="row" colspan="4">Total del proyecto</th><td>$2.500.000</td></tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <div class="grid-2 grid-2--top reveal">
+          <div>
+            <h3>Componentes electrónicos</h3>
+            <p class="figure-number figure-number--small">
+              <span class="figure-number__value">$223.200 <abbr title="pesos colombianos">COP</abbr></span>
+              <span class="figure-number__label">Total de la lista de componentes electrónicos (19 ítems)</span>
+            </p>
+            <p>
+              El informe incluye además una lista de componentes electrónicos: PCB, Arduino Nano, optoacopladores 4N25,
+              relevos de 12&nbsp;V, transistores 2N2222, diodos, resistencias, regulador y borneras, entre otros.
+            </p>
+            <p class="note">El informe no aclara si este valor está incluido en el total del proyecto.</p>
+          </div>
+          <figure class="doc-figure">
+            <a class="zoom" href="assets/img/tabla-componentes-electronicos.png" data-lightbox
+               data-caption="Lista de componentes electrónicos: 19 ítems, total $223.200 COP.">
+              <img src="assets/img/tabla-componentes-electronicos.png" width="528" height="421" loading="lazy"
+                   alt="Hoja de cálculo con 19 componentes electrónicos, sus cantidades, valor unitario y subtotal, entre ellos optoacopladores 4N25, relevos de 12 voltios, Arduino Nano y PCB; total 223.200 pesos.">
+              <span class="visually-hidden">Ampliar imagen</span>
+            </a>
+            <figcaption>Lista de componentes electrónicos, tal como aparece en el informe.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONCLUSIONES ============ -->
+    <section class="section section--alt" id="conclusiones" aria-labelledby="h-conclusiones">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__tag"><span>08</span> Aprendizajes y próximos pasos</p>
+          <h2 id="h-conclusiones">Lo que aprendimos y por dónde sigue</h2>
+        </header>
+
+        <div class="grid-2 grid-2--top reveal">
+          <div>
+            <h3>Aprendizajes</h3>
+            <ul class="list">
+              <li><strong>El papel y el montaje no siempre coinciden.</strong> Hubo que ajustar soportes, alinear la banda y dejar espacio para los cables; esos ajustes pequeños dieron la estabilidad.</li>
+              <li><strong>Ajustar cuesta más que programar.</strong> La mayoría de los errores venían de la calibración y la posición de las piezas, no del código.</li>
+              <li><strong>Integrar es el verdadero reto.</strong> Lograr que mecánica, electrónica, sensores y control trabajen coordinados fue lo más difícil y lo más valioso.</li>
+              <li><strong>Automatizar es para las personas.</strong> La estación busca quitar tareas repetitivas y dar a otros estudiantes un equipo real para aprender, seguro y documentado.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Conclusiones</h3>
+            <ul class="list">
+              <li>Se diseñó y construyó un prototipo de estación MPS que detecta, decide y señaliza la clasificación de piezas metálicas y no metálicas, utilizable como herramienta de aprendizaje.</li>
+              <li>La estación funciona de forma estable cuando está bien calibrada.</li>
+              <li>El diseño modular y el controlador propio la hacen adaptable, con vida útil más allá de este semestre si se mantiene y se sigue documentando.</li>
+              <li>Quedan pendientes que hay que decir con honestidad: la separación física con neumática, la medición formal de precisión y tiempos y las pruebas con más tipos de piezas.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="reveal" id="proximos-pasos">Próximos pasos</h3>
+        <div class="grid-2 grid-2--top reveal">
+          <article class="card card--future">
+            <p class="card__code">Trabajo futuro · No instalado</p>
+            <h4>Sistema neumático de separación</h4>
+            <p>Está diseñado en papel y no se ha probado. El diseño previsto incluye:</p>
+            <ul class="list">
+              <li>Unidad de mantenimiento (filtro y regulador) para aire limpio a presión estable.</li>
+              <li>Electroválvulas activadas por el controlador según la clasificación.</li>
+              <li>Cilindros o desviadores que empujen cada pieza a su contenedor.</li>
+              <li>Mangueras y racores, con revisión de fugas antes de la primera prueba.</li>
+            </ul>
+            <p class="note">
+              Falta conseguir compresor o punto de aire, válvulas, cilindros, racores y mangueras; montar y probar fugas;
+              conectar las salidas del controlador y hacer pruebas de desvío con piezas reales. Al instalarlo habrá que regular
+              la presión y probar primero sin piezas.
+            </p>
+          </article>
+          <div>
+            <h4>Recomendaciones para quien continúe</h4>
+            <ul class="list">
+              <li>Ejecutar el <a href="#protocolo">protocolo de pruebas</a> y registrar piezas, aciertos, errores y tiempos.</li>
+              <li>Dejar un manual de uso y mantenimiento: calibración, cambios de sensor y qué hacer ante un atasco.</li>
+              <li>Rotular tablero y sensores, y guardar planos y programa en una carpeta compartida del laboratorio.</li>
+              <li>Probar la estación con otros controladores y con otros tipos de piezas.</li>
+              <li>Añadir conteo y visualización en tiempo real de las piezas por grupo.</li>
+              <li>Evaluar cuánto costaría replicarla, para saber si es viable construir más módulos.</li>
+              <li>Explorar la visión artificial como mejora futura de la clasificación.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EQUIPO ============ -->
+    <section class="section" id="equipo" aria-labelledby="h-equipo">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__tag"><span>09</span> Equipo</p>
+          <h2 id="h-equipo">Quiénes lo hicimos</h2>
+          <p class="section__intro">
+            Estudiantes de Tecnología en Automatización Industrial, Semestre VI, Facultad de Ingeniería,
+            Universidad de San Buenaventura, Bogotá D.C.
+          </p>
+        </header>
+
+        <ul class="team reveal">
+          <li><span class="team__initials" aria-hidden="true">JO</span><span class="team__name">Juan Camilo Orjuela</span><span class="team__role">Autor</span></li>
+          <li><span class="team__initials" aria-hidden="true">JI</span><span class="team__name">John Alejandro Ibañez</span><span class="team__role">Autor</span></li>
+          <li><span class="team__initials" aria-hidden="true">JF</span><span class="team__name">Juan Carlo Ferreira</span><span class="team__role">Autor</span></li>
+          <li><span class="team__initials" aria-hidden="true">DF</span><span class="team__name">Danilo Farfan</span><span class="team__role">Autor</span></li>
+          <li><span class="team__initials" aria-hidden="true">JG</span><span class="team__name">Juan David Garzon</span><span class="team__role">Autor</span></li>
+          <li class="team__advisor"><span class="team__initials" aria-hidden="true">FG</span><span class="team__name">Fabian Orlando Garcia</span><span class="team__role">Docente asesor</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ REFERENCIAS Y DESCARGA ============ -->
+    <section class="section section--alt" id="referencias" aria-labelledby="h-referencias">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__tag"><span>10</span> Referencias e informe</p>
+          <h2 id="h-referencias">Referencias</h2>
+        </header>
+
+        <ul class="refs reveal">
+          <li>Bolton, W. (2015). <cite>Mechatronics: Electronic control systems in mechanical and electrical engineering</cite> (6.ª ed.). Pearson.</li>
+          <li>Chaparro, M. y Vargas, H. (2022). <cite>Prototipo de sistema de clasificación de materiales reciclables mediante reconocimiento de imágenes</cite>. Universidad ECCI. Repositorio institucional.</li>
+          <li>Groover, M. P. (2016). <cite>Automation, production systems, and computer-integrated manufacturing</cite> (4.ª ed.). Pearson.</li>
+          <li>International Electrotechnical Commission. (2016). <cite lang="en">IEC 60204-1: Safety of machinery — Electrical equipment of machines — Part 1: General requirements</cite>.</li>
+          <li>International Organization for Standardization. (2010). <cite lang="en">ISO 12100: Safety of machinery — General principles for design — Risk assessment and risk reduction</cite>.</li>
+          <li>Ministerio de Trabajo y Seguridad Social. (1979). <cite>Resolución 2400 de 1979. Por la cual se establecen algunas disposiciones sobre vivienda, higiene y seguridad en los establecimientos de trabajo</cite>.</li>
+          <li>Ministerio del Trabajo. (2015). <cite>Decreto 1072 de 2015. Por medio del cual se expide el Decreto Único Reglamentario del Sector Trabajo</cite>. República de Colombia.</li>
+          <li>Universidad Distrital Francisco José de Caldas. (2024). <cite>Diseño y construcción de una máquina clasificadora de botellas PET y vidrio</cite>. Repositorio institucional.</li>
+          <li>Universidad Francisco de Paula Santander. (2023). <cite>Diseño y simulación de la automatización para la separación de residuos ferrosos en sistemas de transporte</cite>. Repositorio institucional.</li>
+          <li>Universidad Militar Nueva Granada. (2023). <cite>Automatización del proceso de selección de materiales plásticos reciclables</cite>. Repositorio institucional.</li>
+        </ul>
+
+        <aside class="download reveal" aria-labelledby="h-descarga">
+          <div>
+            <h3 id="h-descarga">Informe completo</h3>
+            <p>El documento final del Proyecto Integrador, con el marco teórico, el desarrollo y los anexos.</p>
+          </div>
+          <a class="btn btn--primary" href="docs/proyecto-integrador-estacion-mps.pdf" download>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Descargar el informe <span class="btn__meta">(PDF, 17 páginas, 0,8 MB)</span>
+          </a>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>
+        <strong>Estación MPS</strong> · Proyecto Integrador · Tecnología en Automatización Industrial ·
+        Universidad de San Buenaventura · Bogotá D.C., 2026
+      </p>
+      <p><a href="#inicio">Volver al inicio</a></p>
+    </div>
+  </footer>
+
+  <!-- Lightbox accesible (elemento dialog nativo) -->
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-caption">
+    <div class="lightbox__bar">
+      <p class="lightbox__counter" id="lightbox-counter" aria-live="polite"></p>
+      <button class="lightbox__btn" type="button" id="lightbox-close" aria-label="Cerrar imagen ampliada">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <figure class="lightbox__figure">
+      <div class="lightbox__stage">
+        <img id="lightbox-img" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
+      </div>
+      <figcaption id="lightbox-caption"></figcaption>
+    </figure>
+    <div class="lightbox__nav">
+      <button class="lightbox__btn" type="button" id="lightbox-prev" aria-label="Imagen anterior">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="lightbox__btn" type="button" id="lightbox-next" aria-label="Imagen siguiente">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </dialog>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
