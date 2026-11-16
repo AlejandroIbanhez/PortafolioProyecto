@@ -294,13 +294,6 @@ abbr[title] { text-decoration: none; }
   background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
-@supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
-  .site-header {
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
-}
 .site-header__inner {
   display: flex;
   flex-wrap: wrap;
@@ -608,12 +601,13 @@ figcaption {
 .question {
   margin: 0 0 var(--space-6);
   padding: var(--space-5);
-  background: var(--ink);
-  color: var(--bg);
+  background: #15212c;          /* placa oscura fija en ambos temas */
+  color: #f1f3f5;
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-md);
   border-left: 8px solid var(--signal);
 }
-.question__label { color: var(--signal); margin: 0 0 var(--space-3); font-weight: 700; }
+.question__label { color: #ffb824; margin: 0 0 var(--space-3); font-weight: 700; }
 .question blockquote { margin: 0; }
 .question p {
   margin: 0;
@@ -681,6 +675,8 @@ figcaption {
 .d-pivot { fill: var(--surface); stroke: var(--ink); stroke-width: 2.5; }
 .d-text { fill: var(--ink); font-family: var(--font-mono); font-size: 18px; font-weight: 700; }
 .d-callout circle { fill: var(--signal); stroke: var(--on-signal); stroke-width: 2; }
+.d-callout .d-callout--planned { fill: var(--surface); stroke: var(--ink); stroke-dasharray: 5 4; }
+.d-callout--planned + text { fill: var(--ink); }
 .d-callout text { fill: var(--on-signal); font-family: var(--font-mono); font-size: 20px; font-weight: 700; }
 
 /* Tablas */

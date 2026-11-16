@@ -1,1 +1,27 @@
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows / Linux
+Thumbs.db
+Desktop.ini
+*~
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Herramientas locales
+.claude/
+
+# Temporales
+*.log
+*.tmp
