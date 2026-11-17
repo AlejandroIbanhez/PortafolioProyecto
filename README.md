@@ -87,9 +87,9 @@ La página presenta el estado real del proyecto, sin exagerarlo.
 > El controlador es de fabricación propia. No es un PLC industrial certificado.
 
 > [!IMPORTANT]
-> Según los diagramas y la tabla de costos de los anexos, el montaje incluye Arduino Mega y Arduino Nano, driver L298N, módulo de 4 relés y dos servomotores MG996R como mecanismo de desvío.
+> Según los diagramas y la tabla de costos de los apéndices, el montaje incluye Arduino Mega y Arduino Nano, driver L298N, módulo de 4 relés y dos servomotores MG996R como mecanismo de desvío.
 
-**💰 Costos:** total del proyecto **$2.500.000 COP** (anexo E, valores estimados de referencia). Lista de componentes electrónicos: $223.200 COP.
+**💰 Costos:** total del proyecto **$2.500.000 COP** (apéndice E, valores estimados de referencia). Lista de componentes electrónicos: $223.200 COP.
 
 ## ✨ Características de la web
 
@@ -111,9 +111,10 @@ La página presenta el estado real del proyecto, sin exagerarlo.
 ├── assets/
 │   ├── css/styles.css          Tokens de diseño y estilos
 │   ├── js/main.js              Tema, menú móvil, sección activa, revelado y lightbox
-│   └── img/                    Imágenes de los anexos y favicon.svg
+│   └── img/                    Imágenes de los apéndices y favicon.svg
 ├── docs/
-│   ├── proyecto-integrador-estacion-mps.pdf   Informe final (descargable desde la página)
+│   ├── proyecto-integrador-estacion-mps.pdf   Informe final en formato APA 7 (descargable desde la página)
+│   ├── Proyecto-Integrador-Estacion-MPS-APA7.docx   Informe final editable en Word
 │   ├── contenido-documento.txt                Texto del informe, fuente del contenido
 │   ├── diseno-ux.md                           Documentación de diseño y accesibilidad
 │   └── captura.png                            Captura usada en este README
@@ -133,11 +134,11 @@ La página presenta el estado real del proyecto, sin exagerarlo.
 | `tablero-control-vista-frontal.png` | Foto del tablero de control, de frente |
 | `tablero-control-vista-lateral.png` | Foto del tablero de control, de lado |
 | `tarjeta-controlador-arduino-nano.png` | Foto de la tarjeta electrónica con Arduino Nano, optoacopladores y relevos |
-| `planos-dimensiones-estructura.png` | Anexo A: planos y dimensiones de la estructura |
-| `diagrama-electrico-bloques.png` | Anexo B: diagrama eléctrico por bloques |
-| `diagrama-electrico-esquematico.png` | Anexo B: diagrama eléctrico esquemático |
-| `diagrama-flujo-clasificacion.png` | Anexo C: diagrama de flujo de la clasificación |
-| `tabla-costos-proyecto.png` | Anexo E: tabla de costos del proyecto |
+| `planos-dimensiones-estructura.png` | Apéndice A: planos y dimensiones de la estructura |
+| `diagrama-electrico-bloques.png` | Apéndice B: diagrama eléctrico por bloques |
+| `diagrama-electrico-esquematico.png` | Apéndice B: diagrama eléctrico esquemático |
+| `diagrama-flujo-clasificacion.png` | Apéndice C: diagrama de flujo de la clasificación |
+| `tabla-costos-proyecto.png` | Apéndice E: tabla de costos del proyecto |
 | `tabla-componentes-electronicos.png` | Lista de componentes electrónicos |
 
 </details>

@@ -27,7 +27,7 @@ Una sola página con navegación por anclas. El orden va de lo general a lo espe
 3. **Funcionamiento** (`#funcionamiento`): diagrama SVG, cuatro pasos, tabla de lógica, ciclo del programa, calibración (desplegable).
 4. **Componentes** (`#componentes`): seis módulos (mecánica, transporte, sensores, control, actuación, seguridad), reglas y normas.
 5. **Metodología** (`#metodologia`): seis fases y cronograma de 16 semanas.
-6. **Galería** (`#galeria`): fotos del montaje, planos y diagramas del anexo.
+6. **Galería** (`#galeria`): fotos del montaje, planos y diagramas del apéndice.
 7. **Estado** (`#estado`): verificado, pendiente, siguiente fase; análisis; protocolo de pruebas propuesto (`#protocolo`).
 8. **Costos** (`#costos`): total, distribución por categoría, detalle (desplegable), componentes electrónicos.
 9. **Conclusiones** (`#conclusiones`): aprendizajes, conclusiones, próximos pasos (`#proximos-pasos`).
@@ -36,7 +36,7 @@ Una sola página con navegación por anclas. El orden va de lo general a lo espe
 
 Decisiones de contenido:
 
-- El desvío con servomotores se presenta como «según los diagramas del anexo» y se marca como no verificado. La neumática aparece solo como trabajo futuro.
+- El desvío con servomotores se presenta como «según los diagramas del apéndice» y se marca como no verificado. La neumática aparece solo como trabajo futuro.
 - No se muestran porcentajes de precisión ni tiempos, porque no se han medido.
 - El detalle largo (calibración, 14 partidas de costos) va en desplegables `<details>` para no alargar la lectura.
 

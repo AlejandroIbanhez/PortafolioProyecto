@@ -1,609 +1,1155 @@
 
-===== PAGE 1 (chars=411, images=0) =====
+===== PÁGINA 1 =====
+1 
  
  
  
-UNIVERSIDAD DE SAN BUENAVENTURA 
-Facultad de Ingeniería 
-Tecnología en Automatización Industrial 
  
  
-PROYECTO INTEGRADOR 
 Estación MPS: diseño y construcción de una estación clasificadora de 
 materiales 
  
- 
-Presentado por: 
-Juan Camilo Orjuela  
-John Alejandro Ibañez 
-Juan Carlo Ferreira 
-Danilo Farfan 
+Juan Camilo Orjuela, John Alejandro Ibañez, Juan Carlo Ferreira, Danilo Farfan y 
 Juan David Garzon 
- 
-Docente asesor:  
+Facultad de Ingeniería, Universidad de San Buenaventura 
+Proyecto Integrador, Tecnología en Automatización Industrial, semestre VI 
 Fabian Orlando Garcia 
+Noviembre de 2026 
+
+===== PÁGINA 2 =====
+2 
  
-Semestre VI 
-Bogotá D.C., 2026 
+ 
+Tabla de contenidos 
+Resumen..................................................................................................................... 4 
+Estación MPS: diseño y construcción de una estación clasificadora de materiales ... 5 
+Planteamiento del problema ................................................................................... 6 
+Pregunta de investigación ....................................................................................... 6 
+Alcance y limitaciones ............................................................................................. 7 
+Justificación ............................................................................................................. 7 
+Objetivos ................................................................................................................. 8 
+Marco teórico .............................................................................................................. 9 
+Automatización industrial ........................................................................................ 9 
+Estaciones de producción modular ......................................................................... 9 
+Sensores de proximidad ....................................................................................... 10 
+Actuadores ............................................................................................................ 11 
+Controladores lógicos programables .................................................................... 11 
+Bandas transportadoras ........................................................................................ 12 
+Antecedentes ........................................................................................................ 12 
+Metodología .............................................................................................................. 13 
+Fases del proyecto ................................................................................................ 14 
+Cronograma .......................................................................................................... 14 
+Desarrollo del proyecto ............................................................................................. 15 
+Diseño mecánico y estructura ............................................................................... 15 
+Sistema de transporte ........................................................................................... 17 
+Sensores y detección ............................................................................................ 18 
+Mecanismo de desvío ........................................................................................... 20 
+Sistema neumático ................................................................................................ 20 
+Sistema eléctrico y de control ............................................................................... 21 
+Seguridad .............................................................................................................. 21 
+Resultados y análisis ................................................................................................ 23 
+Resultados esperados .......................................................................................... 23 
+Resultados verificados .......................................................................................... 23 
+Protocolo de pruebas propuesto ........................................................................... 23 
+Análisis .................................................................................................................. 24 
+Costos ................................................................................................................... 24 
+Dimensión ética y profesional ................................................................................... 25 
+Conclusiones ............................................................................................................ 26 
+Respuesta a la pregunta de investigación ............................................................ 26 
+
+===== PÁGINA 3 =====
+3 
+ 
+ 
+Limitaciones y recomendaciones .......................................................................... 26 
+Referencias ............................................................................................................... 28 
+Apéndice A. Planos y dimensiones de la estructura ................................................. 30 
+Apéndice B. Diagramas eléctricos ............................................................................ 31 
+Apéndice C. Diagrama de flujo del programa de control .......................................... 33 
+Apéndice D. Registro fotográfico del montaje .......................................................... 34 
+Apéndice E. Lista de materiales y costos ................................................................. 37 
+
+===== PÁGINA 4 =====
+4 
+ 
+ 
+Resumen 
+Este trabajo presenta el diseño y la construcción de una estación de producción 
+modular (MPS) a escala de laboratorio para clasificar piezas según su material. El 
+objetivo fue obtener un equipo funcional que automatice la separación de piezas 
+metálicas y no metálicas y que sirva como herramienta de aprendizaje en el 
+programa de Tecnología en Automatización Industrial de la Universidad de San 
+Buenaventura. El proyecto se desarrolló en seis fases durante un semestre de 16 
+semanas. La estación integra una estructura de aluminio, MDF y piezas impresas en 
+3D; una banda transportadora de 5 V; un sensor inductivo LJ12A3-4-Z/BX y un 
+sensor capacitivo, y un controlador tipo PLC de fabricación propia basado en 
+Arduino y programado en lenguaje Ladder con OpenPLC. En las pruebas de 
+laboratorio se verificó que la banda transporta las piezas de forma continua y que, 
+con los sensores calibrados y la pieza dentro de la zona de lectura, el controlador 
+distingue entre piezas metálicas y no metálicas y señaliza la decisión. La separación 
+física no se validó en el ciclo completo y el sistema neumático, diseñado en papel, 
+queda como la siguiente fase; por ello no se reporta una tasa de aciertos y se 
+propone un protocolo de cinco pruebas para medirla. Se concluye que la 
+confiabilidad de la clasificación depende sobre todo de la calibración de los 
+sensores, de la posición de la pieza y de la velocidad de la banda. 
+Palabras clave: automatización industrial, estación MPS, controlador lógico 
+programable, clasificación de materiales, sensores de proximidad, banda 
+transportadora 
+
+===== PÁGINA 5 =====
+5 
+ 
+ 
+Estación MPS: diseño y construcción de una estación clasificadora de 
+materiales 
+La clasificación manual de materiales es una tarea lenta, repetitiva y 
+propensa a errores. Cuando el volumen de producción aumenta, una persona no 
+puede sostener el mismo ritmo ni el mismo nivel de atención durante toda la 
+jornada, lo que afecta la calidad del proceso. Por esta razón, la automatización de 
+las tareas de manipulación y clasificación es una práctica cada vez más extendida 
+en la industria (Groover, 2016). 
+Este proyecto responde a esa necesidad desde el ámbito académico. Como 
+parte del Proyecto Integrador del sexto semestre de Tecnología en Automatización 
+Industrial, el equipo diseñó y construyó una estación de producción modular (MPS, 
+por la sigla en inglés de Modular Production System) capaz de clasificar piezas de 
+forma automática. El propósito fue obtener un equipo físico que pudiera probarse y 
+mejorarse en el laboratorio, y no solo un modelo simulado. 
+La estación combina mecánica, electrónica, sensores y control programable. 
+Una banda transportadora desplaza las piezas, dos sensores de proximidad 
+detectan su presencia y su tipo de material, y un controlador decide a qué grupo 
+pertenece cada una. Además de resolver un problema de clasificación, la estación 
+se concibió como un recurso didáctico para que otros estudiantes practiquen 
+programación, conexionado, calibración y puesta en marcha con hardware real. 
+Este documento describe el problema abordado, los fundamentos teóricos, la 
+metodología, el desarrollo de cada subsistema, los resultados verificados y los 
+
+===== PÁGINA 6 =====
+6 
+ 
+ 
+aspectos pendientes, así como las conclusiones y las recomendaciones para la 
+continuidad del proyecto. 
+Planteamiento del problema 
+En muchos procesos industriales y de reciclaje, la clasificación de materiales 
+todavía se realiza de forma manual. Esta práctica presenta tres problemas 
+recurrentes: es lenta, depende en gran medida de la persona que la ejecuta y se 
+vuelve costosa cuando el volumen crece. La fatiga y las distracciones reducen la 
+precisión, y dos operarios pueden clasificar la misma pieza de forma distinta. 
+En el contexto académico se presenta una dificultad complementaria. La 
+teoría de la automatización se explica en el aula, pero no siempre se dispone de 
+equipos reales para practicarla. La simulación es útil, aunque no reemplaza la 
+experiencia de ajustar un sensor que no detecta, regular un actuador o depurar un 
+programa que no se comporta como se esperaba. Sin esa práctica, el aprendizaje 
+queda incompleto. 
+Pregunta de investigación 
+A partir de lo anterior, el proyecto se orientó por la siguiente pregunta: ¿cómo 
+diseñar y construir, con los recursos disponibles en la universidad, una estación 
+MPS que clasifique materiales de forma automática, confiable y segura, y que 
+además funcione como herramienta de aprendizaje en el laboratorio de 
+Automatización Industrial? 
+
+===== PÁGINA 7 =====
+7 
+ 
+ 
+Alcance y limitaciones 
+El proyecto se concentró en construir y poner en funcionamiento un prototipo 
+a escala de laboratorio, no una línea industrial completa. La estación trabaja con 
+piezas de prueba definidas por el equipo, a una velocidad controlada y en un 
+entorno académico. Su alcance y sus limitaciones son los siguientes: 
+• Alcance. El prototipo clasifica las piezas según las características que 
+detectan los sensores instalados, es decir, distingue entre materiales 
+metálicos y no metálicos. No pretende identificar cualquier tipo de 
+material. 
+• Alcance. Las pruebas se realizaron con el controlador tipo PLC 
+desarrollado por el equipo. La organización de las entradas y salidas 
+busca que la estación pueda adaptarse a otros controladores. 
+• Limitación. Se elaboró una estimación de costos del prototipo (Apéndice 
+E), pero no un estudio económico de producción en serie ni una validación 
+en un entorno industrial real. 
+• Limitación. Las pruebas se hicieron en el laboratorio, con las condiciones 
+y los materiales disponibles durante el semestre. 
+Justificación 
+El proyecto se justifica por su aporte a la industria y a la formación 
+profesional. En el ámbito industrial, automatizar la clasificación hace que el proceso 
+sea más rápido, uniforme y seguro, y permite que las personas se dediquen a la 
+supervisión, el control de calidad y la mejora del proceso. En actividades como el 
+
+===== PÁGINA 8 =====
+8 
+ 
+ 
+reciclaje, una clasificación correcta desde el inicio evita que el material recuperado 
+se mezcle o se contamine. 
+En el ámbito académico, la estación ofrece un equipo real para aprender a 
+programar un controlador, conectar sensores, ajustar actuadores, diagnosticar fallas 
+y trabajar en equipo, competencias que demanda el sector productivo. Por último, su 
+construcción exigió integrar en un solo proyecto los conocimientos de mecánica, 
+electricidad, electrónica, control y programación adquiridos durante el programa, que 
+es el propósito de un proyecto integrador. 
+Objetivos 
+Objetivo general 
+Diseñar y construir una estación MPS funcional para la clasificación 
+automática de materiales, que sirva como herramienta de aprendizaje en el 
+programa de Tecnología en Automatización Industrial de la Universidad de San 
+Buenaventura. 
+Objetivos específicos 
+1. Diseñar la estructura mecánica y el sistema de transporte de la estación, 
+de modo que sea estable, segura y fácil de mantener. 
+2. Seleccionar e instalar los sensores, los actuadores y el controlador 
+adecuados para clasificar las piezas de prueba. 
+3. Programar la lógica de control que permita detectar, clasificar y separar 
+las piezas de forma automática y repetible. 
+4. Integrar los subsistemas mecánico, eléctrico, electrónico y de control en 
+un solo equipo funcional. 
+
+===== PÁGINA 9 =====
+9 
+ 
+ 
+5. Probar la estación en el laboratorio, evaluar su funcionamiento y corregir 
+las fallas encontradas. 
+6. Documentar el diseño, el montaje, las pruebas y los resultados, para que 
+otros estudiantes puedan usar y mejorar la estación. 
+Marco teórico 
+Esta sección resume los conceptos que orientaron el diseño de la estación y 
+los trabajos previos que sirvieron como referencia. 
+Automatización industrial 
+La automatización consiste en lograr que un proceso se ejecute de forma 
+autónoma según reglas definidas, con supervisión humana pero sin intervención 
+constante (Groover, 2016). Un sistema automatizado típico tiene tres componentes: 
+elementos de medición (sensores), un elemento de decisión (controlador) y 
+elementos de acción (actuadores, como motores o cilindros; Bolton, 2015). En la 
+estación, los sensores detectan la pieza, el controlador determina su grupo y el 
+actuador la dirige al lugar correspondiente. Si uno de estos componentes falla, todo 
+el proceso se ve afectado, por lo que buena parte del trabajo consistió en lograr que 
+se coordinaran. 
+Estaciones de producción modular 
+Las estaciones MPS son módulos de entrenamiento que reproducen, a 
+escala de laboratorio, procesos reales de manufactura. Su principal característica es 
+la modularidad: cada estación se encarga de una tarea, como transportar, clasificar 
+
+===== PÁGINA 10 =====
+10 
+ 
+ 
+o ensamblar, y varias estaciones pueden combinarse para formar una pequeña 
+línea de producción. La estación desarrollada en este proyecto se concentra en la 
+clasificación y se diseñó para conectarse en el futuro con otros módulos. 
+Sensores de proximidad 
+Los sensores permiten que la máquina conozca si hay una pieza, dónde se 
+encuentra y qué característica tiene. Según la aplicación, pueden emplearse 
+sensores inductivos, capacitivos, ópticos o de color, entre otros (Bolton, 2015). La 
+estación utiliza dos sensores de proximidad que se complementan: 
+• Sensor inductivo LJ12A3-4-Z/BX. Genera un campo electromagnético y 
+cambia su salida cuando una pieza metálica se aproxima, sin necesidad 
+de contacto. Es rápido y robusto, pero no detecta plástico, madera, papel 
+ni vidrio. 
+• Sensor capacitivo. Responde al cambio de capacitancia que produce 
+cualquier material frente a su cara sensible, por lo que detecta materiales 
+metálicos y no metálicos. Es más sensible a la humedad, al polvo y a la 
+distancia, y requiere una calibración cuidadosa. 
+La combinación de ambos permite una primera clasificación: si el sensor 
+inductivo se activa, la pieza es metálica; si solo se activa el capacitivo, la pieza es 
+no metálica, y si ninguno se activa, no hay pieza o esta pasó fuera del rango de 
+detección. 
+
+===== PÁGINA 11 =====
+11 
+ 
+ 
+Actuadores 
+Los actuadores ejecutan el trabajo físico de mover, empujar o desviar las 
+piezas. En la industria es común emplear actuadores neumáticos, es decir, cilindros 
+accionados por aire comprimido y controlados por electroválvulas, por su rapidez y 
+sencillez en movimientos cortos y repetitivos (Groover, 2016). Su buen 
+funcionamiento depende de detalles como la regulación de la presión, la ausencia 
+de fugas y la correcta conexión de mangueras y válvulas. 
+En la versión actual del prototipo, el diseño eléctrico contempla servomotores 
+como mecanismo de desvío (Apéndice B), mientras que el sistema neumático se 
+diseñó como una fase posterior del proyecto. 
+Controladores lógicos programables 
+El controlador lógico programable (PLC) recibe las señales de los sensores, 
+las procesa según la lógica programada y ordena a los actuadores qué hacer. Suele 
+programarse en lenguajes como el diagrama de contactos (Ladder), que es visual y 
+de uso extendido en la industria (Bolton, 2015). 
+En lugar de un PLC comercial, el equipo fabricó su propio controlador tipo 
+PLC. La primera versión se desarrolló sobre una placa Arduino UNO, suficiente para 
+validar la lógica, leer los sensores y activar las salidas. Sin embargo, esta placa 
+tiene pocas entradas y salidas, poca memoria y no dispone de conectividad 
+inalámbrica, lo que limita su crecimiento. Por ello, la versión documentada en los 
+diagramas eléctricos integra una placa Arduino Mega 2560 y una Arduino Nano 
+(Apéndice B). La lógica se programó en Ladder mediante OpenPLC, una plataforma 
+de código abierto que permite ejecutar programas de PLC en este tipo de placas. 
+
+===== PÁGINA 12 =====
+12 
+ 
+ 
+Este controlador es adecuado para el laboratorio y el aprendizaje, pero no es 
+un PLC industrial certificado ni tiene la robustez de un equipo comercial. Por otra 
+parte, se decidió no depender de una sola marca: las entradas y salidas de la 
+estación se organizaron para que pueda conectarse a otros controladores 
+disponibles en el laboratorio. 
+Bandas transportadoras 
+La banda transportadora desplaza las piezas sin intervención manual. Su 
+diseño exige considerar la velocidad, el deslizamiento de la banda, la estabilidad de 
+las piezas y el tiempo que necesita cada sensor para detectarlas. Si la banda 
+avanza demasiado rápido, el sensor no alcanza a leer la pieza; si avanza 
+demasiado lento, el proceso pierde productividad. Encontrar el punto intermedio fue 
+parte del ajuste del prototipo. 
+Antecedentes 
+Se revisaron trabajos de universidades colombianas en los que se 
+construyeron o simularon sistemas de clasificación. Entre ellos se encuentran un 
+prototipo de clasificación de materiales reciclables mediante reconocimiento de 
+imágenes (Chaparro y Vargas, 2022), una máquina clasificadora de botellas PET y 
+vidrio (Universidad Distrital Francisco José de Caldas, 2024), un sistema 
+automatizado de selección de plásticos reciclables (Universidad Militar Nueva 
+Granada, 2023) y el diseño y la simulación de un sistema para separar residuos 
+ferrosos en sistemas de transporte (Universidad Francisco de Paula Santander, 
+2023). 
+
+===== PÁGINA 13 =====
+13 
+ 
+ 
+Estos trabajos confirman la viabilidad de la clasificación automática, pero 
+también muestran que cada solución depende del material que se clasifica y del 
+presupuesto disponible. Los sistemas con visión artificial son más versátiles, aunque 
+más costosos y complejos; por esa razón se descartaron en esta fase y quedan 
+como mejora futura. Las soluciones basadas en la combinación de sensores 
+inductivos y capacitivos son económicas y fáciles de comprender, lo que las hace 
+adecuadas para la enseñanza. Además, en los sistemas basados en sensores de 
+proximidad la precisión depende en gran medida de la calibración y de la posición 
+de la pieza frente al sensor, por lo que en este proyecto la calibración y las guías de 
+la banda se trataron como aspectos centrales. 
+También se tomó como referencia el concepto de las estaciones modulares 
+de entrenamiento comerciales, que clasifican piezas por color y material mediante 
+combinaciones de sensores. El aporte de este proyecto no es la clasificación 
+automática en sí, sino una versión accesible, modular y orientada a la enseñanza, 
+con un controlador de fabricación propia y construida con los recursos del 
+laboratorio. 
+Metodología 
+El proyecto se desarrolló en seis fases durante un semestre de 16 semanas. 
+El proceso fue iterativo: cuando una prueba revelaba un problema, se regresaba al 
+diseño para ajustarlo, en ciclos de construcción, prueba, corrección y nueva prueba. 
+
+===== PÁGINA 14 =====
+14 
+ 
+ 
+Fases del proyecto 
+Fase 1: investigación y definición. Se revisaron los antecedentes, se 
+definieron las piezas de prueba y los criterios de clasificación, y se delimitó el 
+alcance como un prototipo de laboratorio. 
+Fase 2: diseño. Se elaboraron los bocetos y planos de la estructura, se 
+seleccionaron los sensores, los actuadores y el controlador, y se definió el 
+conexionado. En esta fase también se planearon las medidas de seguridad: parada 
+de emergencia, protecciones y señalización. 
+Fase 3: construcción. Se fabricó y ensambló la estructura, se montó la 
+banda, se instalaron los sensores y se realizó el cableado. 
+Fase 4: programación. Se desarrolló la lógica de control por bloques: 
+detección, clasificación, activación de salidas y manejo de errores o atascos. 
+Fase 5: pruebas y ajustes. Se puso en funcionamiento la estación con 
+piezas de prueba, se identificaron las fallas y se ajustaron los sensores, los tiempos 
+y la velocidad de la banda. 
+Fase 6: documentación. Se registraron el diseño final, los cambios 
+realizados, los resultados de las pruebas y las recomendaciones para la continuidad 
+del proyecto. 
+Cronograma 
+La Tabla 1 presenta la distribución de las actividades a lo largo del semestre. 
+
+===== PÁGINA 15 =====
+15 
+ 
+ 
+Tabla 1 
+Cronograma de actividades del proyecto 
+Semana Actividad 
+Fase 
+1 
+Conformación del equipo y definición de la idea y del alcance 
+1 
+2 
+Revisión de antecedentes y elaboración del marco teórico 
+1 
+3 
+Definición de las piezas de prueba y de los criterios de clasificación 
+1 
+4 
+Diseño mecánico de la estructura y de la banda 
+2 
+5 
+Selección de los sensores y del controlador 
+2 
+6 
+Diseño eléctrico, electrónico y neumático (en papel) 
+2 
+7 
+Adquisición de materiales 
+3 
+8 
+Construcción de la estructura en aluminio y MDF 
+3 
+9 
+Impresión 3D de piezas y montaje de la banda de 5 V 
+3 
+10 
+Fabricación del controlador tipo PLC sobre Arduino UNO 
+3 
+11 
+Programación de la lógica de detección, clasificación y señalización 
+4 
+12 
+Implementación y prueba del programa en el controlador 
+4 
+13 
+Pruebas 1: calibración de los sensores 
+5 
+14 
+Pruebas 2: clasificación completa y ajustes 
+5 
+15 
+Elaboración del documento final y del manual de uso 
+6 
+16 
+Ajustes finales y sustentación 
+6 
+Nota. Las fases se superpusieron cuando una prueba obligaba a volver al diseño. 
+Desarrollo del proyecto 
+Diseño mecánico y estructura 
+La estructura se diseñó para ser firme sin volverse pesada ni difícil de 
+trasladar dentro del laboratorio. Se combinaron tres materiales, cada uno según su 
+función: 
+• Aluminio para el bastidor principal. Es liviano y rígido, permite armar, 
+desarmar y ajustar sin soldar, y soporta el peso de la banda y de los 
+soportes. 
+
+===== PÁGINA 16 =====
+16 
+ 
+ 
+• MDF para las bases, los paneles y las superficies de apoyo. Es 
+económico, fácil de cortar y ofrece una base limpia para fijar los soportes 
+y el tablero. 
+• Piezas impresas en 3D para los soportes de los sensores, las guías de la 
+banda, los acoples y otras piezas a medida que no se consiguen en el 
+comercio. 
+El diseño permite desmontar los módulos para su mantenimiento. Durante el 
+montaje se comprobó que el diseño en papel y el montaje real no siempre coinciden: 
+fue necesario ajustar soportes, alinear la banda y reservar espacio para el paso de 
+los cables. Estos ajustes fueron determinantes para que la estación funcionara de 
+forma estable. La Figura 1 muestra el prototipo y el Apéndice A presenta los planos 
+con sus dimensiones. 
+
+===== PÁGINA 17 =====
+17 
+ 
+ 
+Figura 1 
+Prototipo de la estación clasificadora en el laboratorio 
+ 
+Nota. Se observan la banda transportadora, los soportes de los sensores y los brazos de desvío. 
+Fotografía del equipo del proyecto. 
+Sistema de transporte 
+La banda transportadora desplaza las piezas desde la zona de entrada hasta 
+la zona de clasificación. Funciona a 5 V, lo que la hace segura para el trabajo en el 
+laboratorio y compatible con la electrónica de control. Según los diagramas 
+eléctricos, el motor de corriente continua de la banda se controla mediante un driver 
+L298N (Apéndice B). 
+
+===== PÁGINA 18 =====
+18 
+ 
+ 
+Se instalaron guías laterales, varias de ellas impresas en 3D, para que las 
+piezas no se salgan de la banda y lleguen al sensor en una posición similar, ya que 
+una pieza desalineada altera la lectura. La velocidad se ajustó para que los 
+sensores tuvieran tiempo suficiente de detectar cada pieza sin frenar el proceso. 
+Sensores y detección 
+Los sensores se ubicaron en la zona de lectura de la banda. El sensor 
+capacitivo, que responde a cualquier material, permite detectar la presencia de la 
+pieza, y el sensor inductivo determina si es metálica. Cuando un sensor detecta una 
+pieza, envía la señal al controlador, que decide según la lógica de la Tabla 2. 
+Tabla 2 
+Lógica de clasificación según el estado de los sensores 
+Sensor inductivo 
+Sensor capacitivo 
+Decisión del controlador 
+Activo 
+Activo o inactivo 
+Pieza metálica 
+Inactivo 
+Activo 
+Pieza no metálica 
+Inactivo 
+Inactivo 
+No hay pieza o la pieza pasó fuera de rango; el 
+sistema espera la siguiente 
+Nota. Con una pieza metálica es normal que el sensor capacitivo también se active; la decisión la 
+toma el sensor inductivo. 
+Procedimiento de calibración 
+La calibración de los sensores se realizó con el siguiente procedimiento: 
+1. Limpiar la zona de lectura para retirar el polvo, la viruta y las piezas 
+adheridas. 
+2. Fijar la distancia entre el sensor y la pieza con una pieza de prueba y 
+marcar esa posición en el soporte. 
+
+===== PÁGINA 19 =====
+19 
+ 
+ 
+3. Girar despacio el potenciómetro del sensor capacitivo hasta que detecte 
+de forma estable la pieza no metálica, y comprobar la detección diez 
+veces seguidas. 
+4. Verificar con la pieza metálica que el sensor inductivo se active siempre. 
+5. Repetir la prueba con la banda en movimiento; si la lectura falla, reducir la 
+velocidad o acercar la guía lateral. 
+6. Registrar la distancia final y la posición del potenciómetro en la tabla de 
+calibración. 
+Errores típicos de detección 
+Durante las pruebas se identificaron fallas recurrentes, que se resumen en la 
+Tabla 3 junto con la solución aplicada. 
+Tabla 3 
+Errores típicos de detección y soluciones aplicadas 
+Error 
+Causa 
+Solución 
+La pieza no se detecta 
+La pieza pasa demasiado 
+lejos del sensor 
+Instalar guías laterales y un 
+soporte fijo para el sensor 
+El sensor capacitivo se 
+activa sin pieza 
+Influencia de la estructura 
+metálica o de la mano del 
+operario 
+Alejar el sensor de las partes 
+metálicas cercanas y recalibrarlo 
+Respuesta variable del 
+sensor capacitivo 
+Piezas húmedas o sucias 
+Usar piezas limpias y secas en las 
+pruebas 
+Lecturas intermitentes 
+Vibración de la banda 
+Apretar los soportes y verificar 
+que la banda esté tensa y 
+alineada 
  
 
-===== PAGE 2 (chars=317, images=0) =====
-Contenido 
+===== PÁGINA 20 =====
+20 
  
-1. Introducción 
-2. Resumen 
-3. Planteamiento del problema 
-4. Justificación 
-5. Objetivos 
-6. Marco teórico 
-7. Metodología 
-8. Desarrollo del proyecto 
-9. Resultados esperados y análisis 
-10. Dimensión ética y profesional 
-11. Conclusiones 
-12. Recomendaciones 
-13. Referencias 
-Anexos (propuestos) 
  
+Mecanismo de desvío 
+De acuerdo con los diagramas eléctricos y el diagrama de flujo del programa 
+(Apéndices B y C), la separación de las piezas se diseñó con dos servomotores 
+MG996R que actúan como brazos desviadores hacia el contenedor de piezas 
+metálicas o hacia el de piezas no metálicas. El funcionamiento de este mecanismo 
+dentro del ciclo completo de clasificación no se ha validado con pruebas formales, 
+por lo que este documento no reporta resultados sobre él. 
+Sistema neumático 
+El sistema neumático aún no está instalado. Se diseñó en papel como la 
+siguiente fase del proyecto y, como no se ha probado, no se reportan resultados 
+sobre su funcionamiento. El diseño previsto incluye los siguientes elementos: 
+• Una unidad de mantenimiento, con filtro y regulador, que suministre aire 
+limpio y a presión estable. 
+• Una o varias electroválvulas, que el controlador activará según la 
+clasificación. 
+• Uno o varios cilindros o desviadores, que dirigirán la pieza metálica a un 
+contenedor y la no metálica a otro. 
+• Mangueras y racores, con una revisión de fugas antes de la primera 
+prueba. 
+Para instalarlo es necesario conseguir un compresor o un punto de aire 
+comprimido, así como las válvulas, los cilindros, los racores y las mangueras; 
+montar el sistema y verificar que no tenga fugas; conectar las salidas del controlador 
+a las válvulas, y realizar pruebas de desvío con piezas reales. 
 
-===== PAGE 3 (chars=2955, images=0) =====
-1. Introducción 
-En la industria, clasificar a mano es lento, cansa y se presta para errores. Cuando el volumen sube, una 
-persona no puede mantener el mismo ritmo ni la misma atención durante toda la jornada, y eso termina 
-afectando la calidad del proceso. Por eso, cada vez más empresas buscan formas de automatizar esa tarea. 
-Este proyecto nace de esa necesidad, pero con los pies en la tierra: somos estudiantes de Tecnología en 
-Automatización Industrial y queríamos construir algo real, que se pudiera tocar, probar y mejorar, no solo 
-simularlo en el computador. Así surgió la idea de diseñar y construir una estación MPS, una estación 
-modular de producción, capaz de clasificar materiales de forma automática. 
-La estación que construimos combina mecánica, neumática, sensores y control con PLC. En términos 
-sencillos: una banda mueve las piezas, unos sensores las “leen”, el controlador decide a qué grupo pertenece 
-cada una y unos actuadores las desvían al contenedor que les corresponde. Todo eso pasa en segundos y sin 
-que nadie tenga que estar empujando piezas a mano. 
-Este documento cuenta cómo lo hicimos: qué problema quisimos resolver, qué investigamos antes de 
-construir, cómo diseñamos cada parte, qué nos funcionó, qué nos tocó corregir y qué aprendimos en el 
-camino. No es un manual perfecto ni un proyecto sin tropiezos. Es el registro honesto de un trabajo de 
-semestre, con sus aciertos y sus pendientes. 
-La estación quedó pensada, además, como una herramienta para la misma universidad: que otros estudiantes 
-puedan practicar con hardware real, probar distintos controladores y entender cómo se siente automatizar 
-un proceso de verdad, no solo en un simulador. 
-2. Resumen 
-En este trabajo se diseñó y construyó una estación MPS para la clasificación automática de materiales. El 
-sistema usa una banda transportadora, sensores, actuadores neumáticos y un controlador lógico 
-programable (PLC) para identificar cada pieza y separarla según sus características. 
-El proceso empieza cuando la pieza entra a la banda. Los sensores detectan su presencia y sus propiedades, 
-el PLC procesa esa información y activa el mecanismo que la lleva a su contenedor. De esta manera se 
-reduce el trabajo manual, se cometen menos errores y el proceso se vuelve más rápido y repetible. 
-El prototipo se pensó para que sirva en el laboratorio: es modular, se puede conectar a distintos PLC del 
-mercado y permite que los estudiantes practiquen programación, conexionado, neumática y puesta en 
-marcha con un equipo real. 
-Palabras clave: automatización industrial, estación MPS, PLC, clasificación de materiales, neumática, 
-sensores, banda transportadora. 
-3. Planteamiento del problema 
-3.1 Descripción del problema 
-En muchos procesos industriales y de reciclaje, la clasificación de materiales todavía se hace a mano. Eso 
-trae tres problemas que se repiten: es lenta, depende demasiado de la persona que la hace y termina siendo 
-
-===== PAGE 4 (chars=2993, images=0) =====
-costosa cuando el volumen crece. Una persona se cansa, se distrae, y dos personas pueden clasificar la 
-misma pieza de forma distinta. 
-En el contexto académico pasa algo parecido, pero al revés: en clase se explica muy bien la teoría de la 
-automatización, pero no siempre hay un equipo real donde practicarla. Simular ayuda, pero no es lo mismo 
-que ver una banda moverse, escuchar un cilindro, ajustar un sensor que no detecta bien o corregir un 
-programa que no hace lo que uno esperaba. Sin esa práctica, el aprendizaje queda a medias. 
-Por eso nos preguntamos: ¿cómo podemos construir, con los recursos que tenemos en la universidad, una 
-estación que clasifique materiales de forma automática y que al mismo tiempo sirva para que otros 
-estudiantes aprendan automatización con un equipo de verdad? 
-3.2 Pregunta de investigación 
-¿Cómo diseñar y construir una estación MPS que clasifique materiales de forma automática, confiable y 
-segura, y que además funcione como herramienta de aprendizaje en el laboratorio de Automatización 
-Industrial? 
-3.3 Alcance y limitaciones 
-El proyecto se concentró en construir y poner a funcionar un prototipo a escala de laboratorio, no una línea 
-industrial completa. Eso significa que trabaja con piezas de prueba definidas por el equipo, a una velocidad 
-controlada y en un entorno académico. 
-• 
-Alcance: El prototipo clasifica piezas según las características que detectan los sensores instalados. No 
-pretende identificar cualquier material que exista. 
-• 
-Alcance: Se trabajó con un PLC específico para las pruebas principales, aunque el diseño busca que se 
-pueda adaptar a otros controladores. 
-• 
-Limitación: No se hizo un estudio económico completo de producción en serie ni una validación en 
-una empresa real. Eso queda como trabajo futuro. 
-• 
-Limitación: Las pruebas se hicieron en el laboratorio, con las condiciones y los materiales disponibles 
-durante el semestre. 
-4. Justificación 
-Este proyecto vale la pena por dos razones que se complementan: lo que aporta a la industria y lo que aporta 
-a nuestra formación. 
-Por el lado industrial, automatizar la clasificación ayuda a que el proceso sea más rápido, más parejo y más 
-seguro. Cuando una máquina hace la tarea repetitiva, las personas pueden dedicarse a supervisar, controlar 
-calidad o mejorar el proceso, en lugar de estar todo el día separando piezas a mano. Además, en procesos 
-como el reciclaje, clasificar bien desde el inicio hace que el material que se recupera sirva de verdad y no 
-termine mezclado o contaminado. 
-Por el lado académico, la estación llena un vacío que sentimos como estudiantes: tener un equipo real para 
-practicar. Con ella se puede aprender a programar un PLC, a conectar sensores, a regular un sistema 
-neumático, a detectar fallas y a trabajar en equipo bajo presión, que es justo lo que piden en una empresa. 
-No es lo mismo leer cómo funciona un cilindro que verlo fallar porque la presión no estaba bien regulada 
-y tener que resolverlo. 
-
-===== PAGE 5 (chars=2493, images=0) =====
-También hay un motivo más práctico: construir la estación nos obligó a integrar todo lo que hemos visto 
-en el semestre — mecánica, electricidad, neumática, control y programación — en un solo proyecto. Esa 
-es, al final, la idea de un proyecto integrador. 
-5. Objetivos 
-5.1 Objetivo general 
-Diseñar y construir una estación MPS funcional para la clasificación automática de materiales, que 
-sirva como herramienta de aprendizaje en el programa de Tecnología en Automatización Industrial 
-de la Universidad de San Buenaventura. 
-5.2 Objetivos específicos 
-• 
-Diseñar la estructura mecánica y el sistema de transporte de la estación, pensando en que sea estable, 
-segura y fácil de mantener. 
-• 
-Seleccionar e instalar los sensores, actuadores y el controlador (PLC) más adecuados para clasificar las 
-piezas de prueba. 
-• 
-Programar la lógica de control que permita detectar, clasificar y separar las piezas de forma automática 
-y repetible. 
-• 
-Integrar los sistemas mecánico, neumático, eléctrico y de control en un solo equipo funcional. 
-• 
-Probar la estación en el laboratorio, medir su funcionamiento y corregir las fallas que aparezcan durante 
-las pruebas. 
-• 
-Documentar el diseño, el montaje, las pruebas y los resultados, de modo que otros estudiantes puedan 
-entender, usar y mejorar la estación. 
-6. Marco teórico 
-Antes de construir, necesitábamos entender bien las piezas del rompecabezas. Esta sección resume lo que 
-investigamos y lo que realmente usamos, sin convertirla en un copiar y pegar de libros. 
-6.1 Automatización industrial 
-Automatizar no es solo poner un motor donde antes había una persona. Es lograr que un proceso se haga 
-solo, siguiendo unas reglas claras, con supervisión humana pero sin intervención constante. Un sistema 
-automatizado típico tiene tres partes: algo que mide (sensores), algo que decide (controlador) y algo que 
-actúa (actuadores, como motores o cilindros). Cuando esas tres partes se entienden bien, el proceso se 
-vuelve más rápido y más parejo. 
-En nuestro caso, el sensor detecta la pieza, el PLC decide a qué grupo pertenece y el actuador la empuja o 
-la desvía al lugar correcto. Si una de esas partes falla, todo el proceso se resiente. Por eso gran parte del 
-trabajo fue lograr que se coordinaran bien. 
-6.2 Estaciones MPS 
-Las estaciones MPS (Modular Production System) son módulos de entrenamiento que imitan procesos 
-reales de fábrica a escala de laboratorio. La gracia es que son modulares: se pueden combinar, cambiar o 
-
-===== PAGE 6 (chars=3214, images=0) =====
-ampliar según lo que se quiera practicar. Una estación puede encargarse de transportar, otra de clasificar, 
-otra de ensamblar, y juntas forman una línea pequeña. 
-Elegimos este enfoque porque nos permitía construir algo útil sin intentar hacer una fábrica completa. 
-Nuestra estación se concentra en una tarea concreta — clasificar — pero está pensada para que en el futuro 
-se pueda conectar con otros módulos. 
-6.3 Sensores 
-Los sensores son los “sentidos” de la máquina. En la estación se usan para saber si hay una pieza, dónde 
-está y qué característica tiene. Según el tipo de pieza y lo que se quiera detectar, se pueden usar sensores 
-inductivos, capacitivos, ópticos o de color, entre otros. 
-En la estación se utilizan dos sensores de proximidad que se complementan: 
-Sensor inductivo LJ12A3-4-Z/BX: detecta únicamente materiales metálicos, sin necesidad de contacto. 
-Genera un campo electromagnético y cuando una pieza metálica se acerca, el sensor cambia su salida. Es 
-rápido y robusto, pero no detecta plástico, madera, papel ni vidrio. 
-Sensor capacitivo: detecta materiales metálicos y no metálicos, como plástico, madera y papel, porque 
-responde al cambio de capacitancia que produce cualquier material frente a su cara sensible. Es más sensible 
-a la humedad, al polvo y a la distancia, por lo que requiere una calibración cuidadosa. 
-La combinación de ambos permite una primera clasificación útil: si el inductivo se activa, la pieza es 
-metálica; si solo se activa el capacitivo, es no metálica; si ninguno se activa, no hay pieza o pasó fuera de 
-rango. 
-6.4 Actuadores y neumática 
-Los actuadores son los que hacen el trabajo físico: mueven, empujan, separan. En la estación usamos 
-actuadores neumáticos, es decir, cilindros que se mueven con aire comprimido, controlados por 
-electroválvulas. La neumática es rápida, relativamente sencilla y muy común en la industria para 
-movimientos cortos y repetitivos, que es justo lo que necesita una clasificadora. 
-Para que funcione bien hay que cuidar detalles que parecen menores: la presión del aire, que no haya fugas, 
-que las mangueras estén bien conectadas y que las válvulas respondan cuando el PLC se los ordena. En las 
-pruebas, varios de nuestros problemas venían de ahí, no del programa. 
-6.5 Controladores lógicos programables (PLC) 
-El PLC es el cerebro de la estación. Recibe las señales de los sensores, las compara con la lógica que 
-programamos y ordena a los actuadores qué hacer. Se programa con lenguajes como el diagrama de 
-contactos (Ladder), que es muy visual y muy usado en la industria. 
-Una decisión importante del proyecto fue no amarrarnos a una sola marca. El diseño busca que la estación 
-pueda trabajar con distintos PLC del mercado, para que los estudiantes practiquen con el controlador que 
-tengan disponible y no dependan de un único equipo. 
-En lugar de utilizar un PLC comercial, el equipo fabricó su propio controlador tipo PLC. 
-La primera versión se desarrolló sobre Arduino UNO, suficiente para probar la lógica, leer los sensores y 
-activar las salidas. Sin embargo, el UNO presenta limitaciones: pocas entradas/salidas, poca memoria, sin 
-conectividad inalámbrica y una velocidad justa para crecer. 
-
-===== PAGE 7 (chars=3047, images=0) =====
-Es importante aclarar que nuestro controlador es un controlador tipo PLC fabricado por nosotros, no un 
-PLC industrial certificado. Funciona para el laboratorio y para el aprendizaje, pero no cuenta con las 
-certificaciones ni la robustez industrial de un PLC comercial. 
+===== PÁGINA 21 =====
+21 
  
-6.6 Banda transportadora 
-La banda es la que mueve las piezas de un punto a otro sin que nadie las tenga que cargar. Parece simple, 
-pero hay que pensar en la velocidad, en que la banda no se patine, en que las piezas no se caigan y en que 
-el sensor tenga tiempo suficiente para “ver” bien cada pieza antes de que pase. Si la banda va muy rápido, 
-el sensor no alcanza a leer; si va muy lento, el proceso se vuelve eterno. Encontrar ese punto medio fue 
-parte del ajuste. 
-6.7 Antecedentes 
-Revisamos trabajos de otras universidades donde se habían construido clasificadoras de botellas, de 
-plásticos o de residuos, muchas con visión artificial o con sensores. Esos proyectos nos confirmaron que la 
-idea funciona, pero también nos mostraron que cada solución depende mucho del material que se clasifica 
-y del presupuesto disponible. Nuestro aporte no es inventar la clasificación automática, sino construir una 
-versión accesible, modular y pensada para enseñar, con los recursos de nuestro laboratorio. 
-Estación de clasificación MPS (Festo MPS / MPS 500): estaciones modulares que clasifican piezas por 
-color y material con sensores ópticos, inductivos y de retrorreflexión, y las separan en rampas. Se tomó 
-como referencia el concepto modular y la lógica de clasificar por combinación de sensores. La diferencia 
-es que en este proyecto no se usa un PLC comercial, sino un controlador propio. 
-Clasificadores con Arduino + sensores inductivo, capacitivo y fibra óptica: dispositivos que detectan 
-un artículo a la vez y deciden la clasificación en Arduino IDE. Es el antecedente más cercano a la lógica 
-usada aquí: inductivo + capacitivo. La diferencia es que en este proyecto la clasificación se hace sobre una 
-banda en movimiento y con controlador propio, no pieza por pieza en un punto fijo. 
-Sistemas de reconocimiento de residuos con Arduino UNO: usan sensores capacitivos, inductivos y de 
-fuerza para identificar plástico, vidrio, papel y metal, con precisiones cercanas al 90% en condiciones 
-controladas. Muestran que la precisión depende más de la calibración y la posición de la pieza que del 
-sensor en sí. Por eso, en este proyecto la calibración y las guías de la banda son parte central, no un detalle. 
-Prototipos con visión artificial / redes neuronales: clasifican con cámara y red neuronal, con errores 
-cercanos al 5% en condiciones controladas. Son más potentes, pero más costosos y complejos. Se 
-descartaron para esta fase por costo y alcance: con inductivo + capacitivo se logra una clasificación útil, 
-barata y entendible para enseñar. Queda como mejora futura. 
-En síntesis, este proyecto no inventa la clasificación automática. Su aporte es construir una versión 
-accesible, modular y pensada para enseñar, con controlador propio. 
  
+Sistema eléctrico y de control 
+El cableado se organizó por bloques: alimentación, entradas de los sensores, 
+salidas hacia los actuadores y el motor, y parada de emergencia. Según los 
+diagramas eléctricos (Apéndice B), el sistema incluye una fuente de 12 V y 5 A, una 
+fuente USB de 5 V para las placas, un Arduino Mega 2560 como controlador 
+principal de la banda y de los servomotores, un Arduino Nano para la lectura de los 
+sensores, comunicados por puerto serie, un driver L298N, un módulo de cuatro relés 
+y una regleta de borneras. El tablero se dejó ordenado y rotulado para que cualquier 
+persona pueda identificar cada conexión. 
+La lógica de control se programó en Ladder con OpenPLC. El programa 
+ejecuta la siguiente secuencia, representada en el diagrama de flujo del Apéndice C: 
+1. Espera a que el sensor detecte una pieza. 
+2. Lee los sensores de clasificación y determina el grupo de la pieza. 
+3. Activa la salida correspondiente durante el tiempo necesario. 
+4. Cuenta la pieza clasificada y vuelve a esperar la siguiente. 
+5. Si una pieza se atasca o un sensor no responde, detiene el proceso y 
+emite una señal de alerta. 
+Seguridad 
+En esta versión del prototipo, con una banda de 5 V y sin sistema neumático, 
+los riesgos principales no son eléctricos de alta tensión ni neumáticos, sino 
+mecánicos y de uso. Como marco de referencia para identificar los peligros y reducir 
+los riesgos se tomaron la norma ISO 12100 (International Organization for 
+Standardization [ISO], 2010), los requisitos de seguridad del equipo eléctrico de las 
 
-===== PAGE 8 (chars=2484, images=0) =====
-7. Metodología 
-Trabajamos por fases, pero no de forma rígida: cuando algo no funcionaba en la prueba, volvíamos al diseño 
-y lo ajustábamos. El proceso fue más parecido a armar, probar, corregir y volver a probar, que a seguir una 
-línea recta. 
-• 
-Fase 1 — Investigar y definir: Revisamos antecedentes, definimos qué tipo de piezas íbamos a 
-clasificar y qué debía lograr la estación. Aquí también definimos el alcance: un prototipo de laboratorio, 
-no una línea industrial. 
-• 
-Fase 2 — Diseñar: Hicimos los bocetos y planos de la estructura, elegimos sensores, actuadores y 
-controlador, y definimos cómo se iban a conectar. En esta fase también pensamos en la seguridad: 
-paradas de emergencia, protecciones y señalización. 
-• 
-Fase 3 — Construir: Maquinamos y ensamblamos la estructura, montamos la banda, instalamos 
-sensores y actuadores, hicimos el cableado y el montaje neumático. 
-• 
-Fase 4 — Programar: Escribimos la lógica de control en el PLC, por bloques: detección, clasificación, 
-activación de actuadores y manejo de errores o atascos. 
-• 
-Fase 5 — Probar y ajustar: Pusimos a funcionar la estación con piezas de prueba, observamos qué 
-fallaba, ajustamos sensores, tiempos y presión, y volvimos a probar. 
-• 
-Fase 6 — Documentar: Registramos el diseño final, los cambios que hicimos, los resultados de las 
-pruebas y las recomendaciones para quien siga con el proyecto. 
+===== PÁGINA 22 =====
+22 
  
-El proyecto se desarrolló en 6 fases, distribuidas en un semestre de 16 semanas: 
  
-Semana 1: Conformación del equipo, idea y alcance. 
-Semana 2: Revisión de antecedentes y marco teórico. 
-Semana 3: Definición de piezas de prueba y criterios de clasificación. 
-Semana 4: Diseño mecánico: estructura y banda. 
-Semana 5: Selección de sensores y controlador. 
-Semana 6: Diseño eléctrico, electrónico y neumático (en papel). 
-Semana 7: Compra / consecución de materiales. 
-Semana 8: Construcción: aluminio + MDF. 
-Semana 9: Impresión 3D + montaje de banda a 5 V. 
-Semana 10: Fabricación del PLC propio sobre Arduino UNO. 
-Semana 11: Programación de lógica: detectar + clasificar + señalizar. 
-Semana 12: Implementación de Arduino UNO. 
-Semana 13: Pruebas 1: calibración de sensores. 
-Semana 14: Pruebas 2: clasificación completa y ajustes. 
-Semana 15: Documento final + manual de uso. 
-Semana 16: Ajustes finales + sustentación. 
+máquinas de la norma IEC 60204-1 (International Electrotechnical Commission 
+[IEC], 2016) y, para la confiabilidad de las funciones de seguridad del sistema de 
+control, la norma ISO 13849-1 (ISO, 2023). En el marco colombiano se consideraron 
+el Decreto 1072 de 2015 (Ministerio del Trabajo, 2015) y la Resolución 2400 de 
+1979 (Ministerio de Trabajo y Seguridad Social, 1979). La Tabla 4 resume los 
+riesgos identificados y las medidas adoptadas. 
+Tabla 4 
+Riesgos identificados y medidas de control 
+Riesgo 
+Medidas de control 
+Atrapamiento en la banda 
+Guardas o cubiertas en los extremos, guías que alejan las 
+manos y prohibición de introducir las manos con la banda en 
+movimiento 
+Proyección de piezas 
+Guías laterales y contenedores a la salida; no ubicarse frente a 
+la salida durante las pruebas 
+Cables sueltos o 
+cortocircuitos 
+Cableado ordenado, sujeto y rotulado; ningún cable sobre la 
+banda; revisión antes de cada práctica 
+Imposibilidad de detener el 
+equipo 
+Botón de parada de emergencia accesible que detiene la banda, 
+verificado antes de cada sesión 
+Riesgo neumático (fase 
+futura) 
+Regular la presión, revisar fugas, no orientar los cilindros hacia 
+las personas y hacer las primeras pruebas sin piezas y a baja 
+presión 
  
-El proceso no fue lineal: cuando algo no funcionaba en la prueba, se volvía al diseño y se ajustaba. Fue un 
-ciclo de armar, probar, corregir y volver a probar. 
- 
-
-===== PAGE 9 (chars=3040, images=0) =====
-8. Desarrollo del proyecto 
-8.1 Diseño mecánico y estructura 
-La estructura se diseñó para que fuera firme, pero sin volverse pesada o imposible de mover en el 
-laboratorio. Se usó La estructura se construyó combinando tres materiales, cada uno donde tiene sentido: 
-Aluminio: para el bastidor principal. Es liviano, rígido y permite armar, desarmar y ajustar sin soldar. Ahí 
-va el peso de la banda y los soportes. 
-MDF: para bases, paneles y superficies de apoyo. Es económico, fácil de cortar y deja una base limpia para 
-atornillar soportes y el tablero. 
-Impresión 3D: para soportes de sensores, guías de la banda, acoples y piezas a medida que no se consiguen 
-fácil en el comercio. Esta es la ventaja de diseñar lo que falta en lugar de adaptarse a lo que hay. 
-El diseño buscó que los módulos se pudieran desmontar para mantenimiento. Al montar, fue necesario 
-ajustar soportes, alinear la banda y dejar espacio para cables sin que estorbaran. Esos ajustes pequeños 
-fueron los que hicieron que la estación funcionara de forma estable; Se buscó que los módulos se pudieran 
-desmontar para mantenimiento. Las dimensiones, los planos y las fotos del montaje deben ir en los anexos; 
-sin ellos, esta parte queda en palabras y no se puede verificar. 
-Algo que aprendimos en esta etapa es que el diseño en papel y el diseño real no siempre coinciden. Al 
-montar, tuvimos que ajustar soportes, alinear la banda y dejar espacio para pasar cables y mangueras sin 
-que estorbaran. Esos ajustes, aunque parezcan pequeños, fueron los que hicieron que la estación funcionara 
-de forma estable. 
-8.2 Sistema de transporte 
-La banda transportadora mueve las piezas desde la zona de entrada hasta la zona de clasificación. Está 
-impulsada por un motor La banda transportadora mueve las piezas desde la entrada hasta la zona de 
-clasificación. Funciona a 5 V, lo que la hace segura para trabajar en laboratorio y compatible con la 
-electrónica de control utilizada. 
-Micromotor— DC / paso a paso — / puente H. 
-Se instalaron guías laterales, varias impresas en 3D, para que las piezas no se salieran y llegaran siempre 
-en una posición parecida al sensor. La velocidad se ajustó buscando el punto donde el sensor alcanza a leer 
-bien sin frenar el proceso: si la banda va muy rápido, el sensor no alcanza a leer; si va muy lento, el proceso 
-se vuelve Eterno; Su velocidad se ajustó para que los sensores tuvieran tiempo de leer cada pieza sin frenar 
-el proceso. Se instalaron guías laterales para que las piezas no se salieran y para que llegaran siempre en 
-una posición parecida al sensor, porque si cada pieza llega chueca, la lectura cambia. 
-8.3 Sensores y detección 
-Los sensores se ubicaron en puntos estratégicos: uno para detectar que llegó una pieza, y otros para 
-identificar la característica que define su clasificación. Cuando el sensor detecta la pieza, manda la señal al 
-PLC, que es el que decide qué hacer. 
-Lógica de clasificación: 
-1. Inductivo = SÍ / pieza METÁLICA. 
-2. Inductivo = NO, capacitivo = SÍ / pieza NO METÁLICA. 
-
-===== PAGE 10 (chars=2292, images=0) =====
-3. Ninguno = SÍ / no hay pieza o la pieza pasó fuera de rango. El sistema espera la siguiente. 
-Calibración paso a paso: 
-1. Limpiar la zona de lectura: sin polvo, sin viruta, sin piezas pegadas. 
-2. Fijar la distancia sensor-pieza con una pieza de prueba y marcar esa posición en el soporte. 
-3. Con el potenciómetro del capacitivo, girar despacio hasta que detecte la pieza no metálica de forma 
-estable, y luego probar 10 veces seguidas. 
-4. Probar con la pieza metálica: el inductivo debe activarse siempre. Es normal que el capacitivo 
-también se active, la decisión la toma el inductivo. 
-5. Probar con la banda en movimiento: si la lectura falla en movimiento, bajar un poco la velocidad o 
-acercar la guía lateral. 
-6. Registrar la distancia final y la posición del potenciómetro en la tabla de calibración. 
-Errores típicos: 
-• 
-Pieza que pasa muy lejos del sensor / no la detecta. Solución: guías laterales y soporte fijo. 
-• 
-Sensor capacitivo que se dispara con la estructura o con la mano / alejarlo de metal cercano y 
-recalibrar. 
-• 
-Piezas húmedas o sucias / el capacitivo cambia su respuesta. Solución: usar piezas limpias y secas 
-para las pruebas. 
-• 
-Vibración de la banda / lecturas intermitentes. Solución: apretar soportes y revisar que la banda 
-esté tensa y alineada. 
- 
-8.4 Sistema neumático 
-El sistema neumático AÚN NO está instalado. Está diseñado en papel y queda como la siguiente fase. No 
-se afirma que funcione, porque no se ha probado. 
-Diseño previsto para instalar: 
-• 
-Unidad de mantenimiento (filtro + regulador) para entregar aire limpio y a presión estable. 
-• 
-Electroválvula(s) que el controlador activará según la clasificación. 
-• 
-Cilindro(s) o desviador(es) que empujarán la pieza metálica a un contenedor y la no metálica a otro. 
-• 
-Mangueras y racores, con revisión de fugas antes de la primera prueba. 
-¿Qué falta para instalarlo?: conseguir compresor o punto de aire, válvulas, cilindros, racores y mangueras; 
-montar y probar fugas; conectar las salidas del controlador a las válvulas; y hacer pruebas de desvío con 
-piezas reales. 
-Hasta que esto no esté, la estación clasifica por detección y señalización, no por separación neumática 
-automática. La estación hoy detecta y decide. La separación física completa llega con la neumática. 
-
-===== PAGE 11 (chars=2364, images=0) =====
-8.5 Sistema eléctrico y de control 
-El cableado se organizó por bloques: alimentación, entradas de sensores, salidas a válvulas y motor, y 
-parada de emergencia. Se usó: calibre de cable 12, protecciones, fuente, tablero y se procuró dejar el tablero 
-ordenado y rotulado, para que otra persona pueda entenderlo sin tener que adivinar qué cable es cuál. 
-La lógica de control se programó en LADDER y OPEN PLC. En términos generales, el programa hace 
-esto: 
-• 
-Espera a que el sensor de presencia detecte una pieza. 
-• 
-Lee los sensores de clasificación y decide a qué grupo pertenece. 
-• 
-Activa el actuador correspondiente durante el tiempo necesario. 
-• 
-Cuenta la pieza clasificada y vuelve a esperar la siguiente. 
-• 
-Si algo se atasca o un sensor no responde, detiene el proceso y avisa con una señal. 
-[COMPLETAR: agreguen el diagrama de flujo o el diagrama Ladder simplificado como figura, con su 
-explicación. Un proyecto de automatización sin mostrar su lógica de control queda incompleto.] 
-8.6 Seguridad 
-La seguridad no es un adorno. En esta versión, con banda a 5 V y sin neumática, el riesgo principal no es 
-eléctrico alto ni neumático, sino mecánico y de uso. 
-Atrapamiento en la banda: guardas / cubiertas en los extremos, guías que alejan las manos, y regla clara: 
-no meter la mano con la banda en movimiento. 
-Pieza que sale disparada: guías laterales y contenedores a la salida; no pararse frente a la salida durante 
-pruebas. 
-Cables sueltos / corto: cableado ordenado, amarrado y rotulado; no dejar cables colgando sobre la banda. 
-Revisar antes de cada práctica. 
-Parada de emergencia: botón accesible que corta la banda. Verificar que funcione antes de cada sesión. 
-Riesgo neumático (futuro): cuando se instale la neumática, regular presión, revisar fugas, no apuntar 
-cilindros a personas, y probar primero sin piezas y a baja presión. 
-Normas de referencia: ISO 12100 (identificación y reducción de riesgos), ISO 13849 (confiabilidad de 
-los sistemas de control), IEC 60204-1 (seguridad eléctrica de máquinas), Decreto 1072 de 2015 y 
-Resolución 2400 de 1979. 
-Reglas de uso en laboratorio: 
-1. Revisar parada de emergencia antes de encender. 
-2. No meter manos en la banda en movimiento. 
+Además, se establecieron las siguientes reglas de uso en el laboratorio: 
+1. Verificar la parada de emergencia antes de encender el equipo. 
+2. No introducir las manos en la banda en movimiento. 
 3. Mantener la zona libre de herramientas y piezas sueltas. 
-4. Si algo se atasca, parar, apagar y luego despejar — nunca con la banda andando. 
+4. Ante un atasco, detener y apagar el equipo antes de retirar la pieza, 
+nunca con la banda en movimiento. 
 
-===== PAGE 12 (chars=2874, images=0) =====
-9. Resultados esperados y análisis 
-Qué esperábamos: que la estación detectara de forma estable si una pieza era metálica o no, que la decisión 
-fuera repetible — la misma pieza, el mismo resultado — y que el proceso fuera más constante que hacerlo 
-a mano. Y más adelante, conectar la neumática. 
-Qué sí pudimos verificar: la banda mueve las piezas de forma continua a 5 V, los sensores detectan 
-presencia y distinguen metálico / no metálico cuando están calibrados y la pieza pasa por la zona de lectura, 
-y el controlador decide y señaliza correctamente en esas condiciones. 
-Qué NO pudimos medir todavía: la separación física automática completa, ni la tasa de aciertos de todo 
-el ciclo (detectar + desviar), porque la neumática no está instalada. Por eso no se presenta un porcentaje de 
-precisión final. Presentar un número sin haber probado el ciclo completo sería engañoso. 
-Protocolo de pruebas propuesto: 
-• 
-Prueba 1 — Detección: pasar 30 piezas metálicas y 30 no metálicas, una por una. Registrar cuántas 
-detectó bien cada sensor. 
-• 
-Prueba 2 — Repetibilidad: pasar la misma pieza 20 veces. Registrar cuántas veces dio el mismo 
-resultado. 
-• 
-Prueba 3 — En movimiento: pasar 30 piezas con la banda andando. Comparar aciertos en 
-movimiento vs. en parado. 
-• 
-Prueba 4 — Velocidad: medir tiempo de 20 piezas seguidas. Calcular piezas por minuto y tiempo 
-por pieza. 
-• 
-Prueba 5 — Fallas: probar con pieza fuera de posición, sucia o muy lejos. Registrar qué error 
-apareció y cómo se corrigió. 
-Análisis: la clasificación funciona cuando se cumplen tres condiciones: sensor calibrado, pieza bien 
-posicionada y velocidad adecuada. Cuando una de esas tres falla, la lectura falla. La parte más difícil no fue 
-programar, sino ajustar. El código es corto; lo largo fue calibrar, alinear, apretar soportes y volver a probar. 
-Esa es una lección real de automatización. 
-10. Dimensión ética y profesional 
-Cuando se construye una máquina, no solo se resuelven problemas técnicos. También se toman decisiones 
-que afectan a personas: quién la va a usar, qué tan segura es, si reemplaza un trabajo o si ayuda a que ese 
-trabajo sea menos pesado y más seguro. 
-En este proyecto partimos de una idea clara: la automatización debe servir para quitarle a las personas las 
-tareas repetitivas y riesgosas, no para dejarlas sin herramientas para aprender o trabajar. Por eso la estación 
-está pensada como una herramienta de formación: que los estudiantes ganen habilidades que les sirvan en 
-la industria, en lugar de depender de equipos que no pueden tocar. 
-También asumimos un compromiso con la seguridad y con hacer las cosas bien: no entregar un equipo que 
-funcione “más o menos”, sino uno que se detenga de forma segura si algo falla, que esté documentado y 
-que otra persona pueda mantener. Esa responsabilidad es parte del ejercicio profesional, no un extra. 
+===== PÁGINA 23 =====
+23 
+ 
+ 
+Resultados y análisis 
+Resultados esperados 
+Se esperaba que la estación detectara de forma estable si una pieza es 
+metálica o no metálica, que la decisión fuera repetible, es decir, que la misma pieza 
+produjera siempre el mismo resultado, y que el proceso fuera más constante que la 
+clasificación manual. 
+Resultados verificados 
+En las pruebas de laboratorio se verificó lo siguiente: 
+• La banda transporta las piezas de forma continua a 5 V. 
+• Los sensores detectan la presencia de la pieza y distinguen entre 
+materiales metálicos y no metálicos cuando están calibrados y la pieza 
+pasa por la zona de lectura. 
+• El controlador toma la decisión de clasificación y la señaliza 
+correctamente en esas condiciones. 
+No se pudieron medir la separación física en el ciclo completo ni la tasa de 
+aciertos del ciclo de detección y desvío. Por esa razón no se reporta un porcentaje 
+de precisión: presentar una cifra sin haber probado el ciclo completo no tendría 
+respaldo. 
+Protocolo de pruebas propuesto 
+Para medir el desempeño de la estación con evidencia, se propone el 
+protocolo de la Tabla 5. 
 
-===== PAGE 13 (chars=2079, images=0) =====
-11. Conclusiones 
-• 
-Se logró diseñar y construir una estación MPS funcional, que clasifica materiales de forma automática 
-y que puede usarse como herramienta de aprendizaje en el laboratorio. 
-• 
-La integración de mecánica, neumática, sensores y PLC fue el reto más grande — y también el 
-aprendizaje más valioso — porque obligó a que sistemas distintos trabajaran coordinados. 
-• 
-Las pruebas mostraron que la estación funciona de forma estable cuando está bien calibrada, y que gran 
-parte de los errores no venían del programa, sino del ajuste de sensores, la posición de las piezas y la 
-presión neumática. 
-• 
-El diseño modular y la intención de que funcione con distintos PLC la hacen adaptable, lo que le da 
-vida útil más allá de este semestre, si se le hace mantenimiento y se sigue documentando. 
-• 
-Quedaron pendientes que hay que decir con honestidad: la medición formal de precisión y tiempos, la 
-documentación completa de planos y programa, y las pruebas con más tipos de piezas. Esos pendientes 
-no le quitan valor al trabajo, pero sí marcan por dónde debe seguir quien lo continúe. 
-12. Recomendaciones 
-• 
-Hacer pruebas formales y registrar los datos: número de piezas, aciertos, errores y tiempos, para poder 
-hablar de precisión con evidencia. 
-• 
-Dejar un manual de uso y mantenimiento: cómo calibrar sensores, qué presión usar, cómo cambiar una 
-manguera o un sensor, y qué hacer si la estación se atasca. 
-• 
-Rotular el tablero, las mangueras y los sensores, y dejar los planos y el programa en una carpeta 
-compartida del laboratorio. 
-• 
-Probar la estación con otros PLC y con otros tipos de piezas, para comprobar de verdad que es tan 
-universal como se planteó. 
-• 
-Incorporar, en una versión futura, un sistema de conteo y visualización (por ejemplo, una pantalla o un 
-registro en el computador) para que se vea en tiempo real cuántas piezas van por cada grupo. 
-• 
-Incluir en la próxima iteración una evaluación de costos: cuánto costó construirla y cuánto costaría 
-replicarla, para saber si es viable hacer más módulos. 
+===== PÁGINA 24 =====
+24 
  
  
+Tabla 5 
+Protocolo de pruebas propuesto 
+Prueba 
+Procedimiento 
+Registro 
+1. Detección 
+Pasar 30 piezas metálicas y 30 no 
+metálicas, una por una 
+Número de detecciones 
+correctas de cada sensor 
+2. Repetibilidad 
+Pasar la misma pieza 20 veces 
+Número de veces que se 
+obtiene el mismo resultado 
+3. Detección en 
+movimiento 
+Pasar 30 piezas con la banda en 
+marcha 
+Aciertos en movimiento frente 
+a aciertos con la banda 
+detenida 
+4. Velocidad 
+Medir el tiempo de 20 piezas 
+consecutivas 
+Piezas por minuto y tiempo por 
+pieza 
+5. Fallas 
+Probar con piezas fuera de 
+posición, sucias o alejadas del 
+sensor 
+Error presentado y acción 
+correctiva 
+ 
+Análisis 
+La clasificación funciona cuando se cumplen tres condiciones: el sensor está 
+calibrado, la pieza está bien posicionada y la velocidad de la banda es adecuada. 
+Cuando alguna de ellas falla, la lectura falla. La mayor dificultad del proyecto no 
+estuvo en la programación, sino en el ajuste: el programa es breve, mientras que la 
+calibración, la alineación, el ajuste de los soportes y la repetición de las pruebas 
+demandaron la mayor parte del tiempo. Esta es una lección característica de los 
+proyectos de automatización. 
+Costos 
+El costo estimado del prototipo es de $2.500.000 COP, distribuido como se 
+muestra en la Tabla 6. Se trata de valores de referencia, no de facturas, y el detalle 
+por ítem se presenta en el Apéndice E. 
+
+===== PÁGINA 25 =====
+25 
  
  
+Tabla 6 
+Distribución del costo estimado por categoría 
+Categoría 
+Valor (COP) 
+Participación (%) 
+Estructura 
+660.000 
+26,4 
+Electrónica 
+495.000 
+19,8 
+Actuadores 
+430.000 
+17,2 
+Mano de obra 
+400.000 
+16,0 
+Otros 
+310.000 
+12,4 
+Sensores 
+205.000 
+8,2 
+Total 
+2.500.000 
+100,0 
+Nota. Valores estimados de referencia en pesos colombianos. Elaboración propia a partir de la Tabla 
+E1. 
+Dimensión ética y profesional 
+La construcción de una máquina implica decisiones técnicas y también 
+decisiones que afectan a las personas: quién la usará, qué tan segura es y si 
+reemplaza un trabajo o lo hace menos pesado y más seguro. El proyecto partió de 
+la idea de que la automatización debe liberar a las personas de las tareas repetitivas 
+y riesgosas. Por eso la estación se concibió como una herramienta de formación, 
+para que los estudiantes desarrollen habilidades útiles en la industria con equipos 
+que pueden manipular. 
+El equipo asumió además un compromiso con la seguridad y la calidad: 
+entregar un equipo que se detenga de forma segura ante una falla, que esté 
+documentado y que otra persona pueda mantener. También asumió el compromiso 
+de informar los resultados con honestidad, diferenciando lo verificado de lo 
+pendiente. Esa responsabilidad forma parte del ejercicio profesional. 
+
+===== PÁGINA 26 =====
+26 
  
  
+Conclusiones 
+Respuesta a la pregunta de investigación 
+Con los recursos de la universidad fue posible diseñar y construir una 
+estación MPS que detecta y clasifica piezas metálicas y no metálicas de forma 
+automática, mediante una banda transportadora, un sensor inductivo, un sensor 
+capacitivo y un controlador tipo PLC de fabricación propia. El prototipo cumple su 
+función como herramienta de aprendizaje, ya que permite practicar programación, 
+conexionado, calibración y diagnóstico de fallas con hardware real. La separación 
+física en el ciclo completo y la medición formal de su confiabilidad quedan 
+pendientes. 
+La integración de los subsistemas mecánico, electrónico y de control fue el 
+principal reto del proyecto y también su aprendizaje más valioso. Las pruebas 
+mostraron que la estación funciona de forma estable cuando está bien calibrada y 
+que la mayoría de los errores no se originaron en el programa, sino en el ajuste de 
+los sensores, la posición de las piezas y la velocidad de la banda. El diseño modular 
+y la posibilidad de conectar distintos controladores le dan a la estación una vida útil 
+que va más allá de este semestre, siempre que se mantenga y se siga 
+documentando. 
+Limitaciones y recomendaciones 
+El proyecto tiene limitaciones que deben reconocerse: no se realizó la 
+medición formal de la precisión y los tiempos, la documentación de los planos y del 
+programa de control está incompleta, no se instaló el sistema neumático y las 
+
+===== PÁGINA 27 =====
+27 
  
  
+pruebas se limitaron a pocos tipos de piezas. Para la continuidad del proyecto se 
+recomienda: 
+• Aplicar el protocolo de pruebas propuesto y registrar el número de piezas, 
+los aciertos, los errores y los tiempos, para respaldar la precisión con 
+evidencia. 
+• Validar el mecanismo de desvío en el ciclo completo e instalar el sistema 
+neumático diseñado. 
+• Elaborar un manual de uso y mantenimiento que explique cómo calibrar 
+los sensores, cómo reemplazar componentes y cómo actuar ante un 
+atasco. 
+• Rotular el tablero y los sensores, y guardar los planos y el programa en 
+una carpeta compartida del laboratorio. 
+• Probar la estación con otros controladores y con otros tipos de piezas 
+para comprobar su adaptabilidad. 
+• Incorporar un sistema de conteo y visualización, como una pantalla o un 
+registro en computador, que muestre en tiempo real las piezas 
+clasificadas en cada grupo. 
+• Completar la estimación de costos con los valores reales de compra para 
+evaluar la viabilidad de replicar la estación. 
+
+===== PÁGINA 28 =====
+28 
  
  
+Referencias 
+Bolton, W. (2015). Mechatronics: Electronic control systems in mechanical and 
+electrical engineering (6.ª ed.). Pearson. 
+Chaparro, M. y Vargas, H. (2022). Prototipo de sistema de clasificación de 
+materiales reciclables mediante reconocimiento de imágenes [Trabajo de 
+grado, Universidad ECCI]. Repositorio institucional Universidad ECCI. 
+Groover, M. P. (2016). Automation, production systems, and computer-integrated 
+manufacturing (4.ª ed.). Pearson. 
+International Electrotechnical Commission. (2016). Safety of machinery — Electrical 
+equipment of machines — Part 1: General requirements (Norma IEC 60204-
+1:2016). 
+International Organization for Standardization. (2010). Safety of machinery — 
+General principles for design — Risk assessment and risk reduction (Norma 
+ISO 12100:2010). 
+International Organization for Standardization. (2023). Safety of machinery — 
+Safety-related parts of control systems — Part 1: General principles for design 
+(Norma ISO 13849-1:2023). 
+Ministerio de Trabajo y Seguridad Social. (1979). Resolución 2400 de 1979: Por la 
+cual se establecen algunas disposiciones sobre vivienda, higiene y seguridad 
+en los establecimientos de trabajo. República de Colombia. 
+
+===== PÁGINA 29 =====
+29 
  
+ 
+Ministerio del Trabajo. (2015). Decreto 1072 de 2015: Por medio del cual se expide 
+el Decreto Único Reglamentario del Sector Trabajo. República de Colombia. 
+Universidad Distrital Francisco José de Caldas. (2024). Diseño y construcción de 
+una máquina clasificadora de botellas PET y vidrio [Trabajo de grado]. 
+Repositorio institucional. 
+Universidad Francisco de Paula Santander. (2023). Diseño y simulación de la 
+automatización para la separación de residuos ferrosos en sistemas de 
+transporte [Trabajo de grado]. Repositorio institucional. 
+Universidad Militar Nueva Granada. (2023). Automatización del proceso de 
+selección de materiales plásticos reciclables [Trabajo de grado]. Repositorio 
+institucional. 
+
+===== PÁGINA 30 =====
+30 
+ 
+ 
+Apéndice A 
+Planos y dimensiones de la estructura 
+Figura A1 
+Planos y dimensiones de la estructura y del gabinete de control 
+ 
+Nota. Vistas frontal del gabinete, superior y lateral de la estructura, y detalle del soporte del sensor y 
+del servomotor. Cotas en milímetros estimadas a partir de fotografías; deben verificarse en el 
+prototipo físico. Los rótulos usan la sigla MPC (módulo de prueba y control). 
+
+===== PÁGINA 31 =====
+31 
+ 
+ 
+Apéndice B 
+Diagramas eléctricos 
+Figura B1 
+Diagrama eléctrico de bloques 
+ 
+Nota. Alimentación de 12 V y 5 V con tierras comunes, Arduino Mega como control principal, Arduino 
+Nano para la lectura de los sensores, driver L298N para el motor de la banda, módulo de cuatro 
+relés, dos servomotores MG996R y los sensores inductivo y capacitivo. 
+
+===== PÁGINA 32 =====
+32 
+ 
+ 
+Figura B2 
+Diagrama eléctrico esquemático 
+ 
+Nota. Representación del mismo circuito en estilo esquemático, con la regleta de borneras. El 
+diagrama neumático se elaborará cuando se instale ese sistema. 
+
+===== PÁGINA 33 =====
+33 
+ 
+ 
+Apéndice C 
+Diagrama de flujo del programa de control 
+Figura C1 
+Diagrama de flujo de la clasificación por sensores y servomotores 
  
 
-===== PAGE 14 (chars=159, images=4) =====
-13. Anexos 
- 
-ANEXO A — Planos y dimensiones de la estructura 
+===== PÁGINA 34 =====
+34 
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-ANEXO B — Diagrama eléctrico y neumático 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+Apéndice D 
+Registro fotográfico del montaje 
+Figura D1 
+Tablero de control, vista frontal 
  
 
-===== PAGE 15 (chars=72, images=1) =====
-ANEXO C — Diagrama de flujo y programa del PLC 
+===== PÁGINA 35 =====
+35 
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
+Figura D2 
+Tablero de control, vista lateral 
  
 
-===== PAGE 16 (chars=109, images=4) =====
-ANEXO D — Fotografías del montaje y de la estación funcionando 
+===== PÁGINA 36 =====
+36 
  
  
-ANEXO E — Lista de materiales y costos
+Figura D3 
+Tarjeta electrónica del controlador 
  
+Nota. Tarjeta con Arduino Nano, optoacopladores, relevos y borneras, energizada durante las 
+pruebas. 
 
-===== PAGE 17 (chars=1870, images=1) =====
+===== PÁGINA 37 =====
+37 
  
  
-14. Referencias 
-Se organizaron en formato APA 7.ª edición. Revisen que cada referencia citada en el texto aparezca aquí, 
-y viceversa. Las referencias que en el documento original no tenían datos completos quedaron marcadas 
-para completar. 
-• 
-International Organization for Standardization. (2010). ISO 12100: Safety of machinery — General 
-principles for design — Risk assessment and risk reduction. 
-• 
-International Electrotechnical Commission. (2016). IEC 60204-1: Safety of machinery — Electrical 
-equipment of machines — Part 1: General requirements. 
-• 
-Ministerio del Trabajo. (2015). Decreto 1072 de 2015. Por medio del cual se expide el Decreto Único 
-Reglamentario del Sector Trabajo. República de Colombia. 
-• 
-Ministerio de Trabajo y Seguridad Social. (1979). Resolución 2400 de 1979. Por la cual se establecen 
-algunas disposiciones sobre vivienda, higiene y seguridad en los establecimientos de trabajo. 
-• 
-Bolton, W. (2015). Mechatronics: Electronic control systems in mechanical and electrical engineering 
-(6.ª ed.). Pearson. 
-• 
-Groover, M. P. (2016). Automation, production systems, and computer-integrated manufacturing (4.ª 
-ed.). Pearson. 
-• 
-Chaparro, M. y Vargas, H. (2022). Prototipo de sistema de clasificación de materiales reciclables 
-mediante reconocimiento de imágenes. Universidad ECCI. Repositorio institucional.  
-• 
-Universidad Distrital Francisco José de Caldas. (2024). Diseño y construcción de una máquina 
-clasificadora de botellas PET y vidrio. Repositorio institucional.  
-• 
-Universidad Militar Nueva Granada. (2023). Automatización del proceso de selección de materiales 
-plásticos reciclables. Repositorio institucional. 
-• 
-Universidad Francisco de Paula Santander. (2023). Diseño y simulación de la automatización para la 
-separación de residuos ferrosos en sistemas de transporte. Repositorio institucional.  
+Apéndice E 
+Lista de materiales y costos 
+Tabla E1 
+Detalle del costo estimado del prototipo 
+N.º 
+Categoría 
+Descripción 
+Cant. 
+Valor 
+unitario 
+(COP) 
+Subtotal 
+(COP) 
+1 
+Electrónica 
+Arduino Mega 2560 
+1 
+180.000 
+180.000 
+2 
+Electrónica 
+Arduino Nano 
+1 
+65.000 
+65.000 
+3 
+Electrónica 
+Driver L298N 
+1 
+45.000 
+45.000 
+4 
+Electrónica 
+Módulo de relés ×4 y borneras 
+1 
+85.000 
+85.000 
+5 
+Electrónica 
+Fuente de 12 V y 5 A, y fuente USB 
+de 5 V 
+1 
+120.000 
+120.000 
+6 
+Sensores 
+Sensor inductivo M12 
+1 
+110.000 
+110.000 
+7 
+Sensores 
+Sensor capacitivo 
+1 
+95.000 
+95.000 
+8 
+Actuadores 
+Servomotor MG996R 
+2 
+55.000 
+110.000 
+9 
+Actuadores 
+Motor DC y banda transportadora 
+de 350 mm 
+1 
+320.000 
+320.000 
+10 
+Estructura 
+Base metálica, soportes, cubierta y 
+tornillería 
+1 
+380.000 
+380.000 
+11 
+Estructura 
+Gabinete metálico, placa de 
+madera, canaleta y riel DIN 
+1 
+280.000 
+280.000 
+12 
+Otros 
+Cableado, conectores, 
+prensaestopas y consumibles 
+1 
+150.000 
+150.000 
+13 
+Otros 
+Impresión del documento, planos y 
+transporte 
+1 
+160.000 
+160.000 
+14 
+Mano de obra Montaje, programación y pruebas 
+1 
+400.000 
+400.000 
  
  
+Total 
+ 
+ 
+2.500.000 
+Nota. Valores estimados de referencia; deben ajustarse con las facturas reales si se requieren. 
+
+===== PÁGINA 38 =====
+38 
+ 
+ 
+Tabla E2 
+Lista de componentes electrónicos 
+N.º 
+Componente 
+Cant. 
+Valor unitario 
+(COP) 
+Subtotal 
+(COP) 
+1 
+Optoacoplador 4N25 
+5 
+2.000 
+10.000 
+2 
+Resistencia de 4,7 kΩ 
+9 
+200 
+1.800 
+3 
+Resistencia de 10 kΩ 
+5 
+200 
+1.000 
+4 
+Resistencia de 1 kΩ 
+5 
+200 
+1.000 
+5 
+Diodo LED 
+10 
+500 
+5.000 
+6 
+Transistor 2N2222 
+8 
+500 
+4.000 
+7 
+Diodo 1N4148 
+4 
+500 
+2.000 
+8 
+Relevo de 5 pines y 12 V 
+4 
+20.000 
+80.000 
+9 
+Transistor TIP42C 
+1 
+4.000 
+4.000 
+10 
+Resistencia de 3 Ω 
+1 
+300 
+300 
+11 
+Regulador 7809 
+1 
+2.000 
+2.000 
+12 
+Condensador de 22 pF 
+1 
+300 
+300 
+13 
+Condensador de 10 pF 
+1 
+300 
+300 
+14 
+Base maquinada 
+1 
+10.000 
+10.000 
+15 
+Arduino Nano 
+1 
+28.000 
+28.000 
+16 
+Bornera de 2 puestos 
+4 
+2.000 
+8.000 
+17 
+Bornera de 3 puestos 
+4 
+2.000 
+8.000 
+18 
+Base para circuito integrado de 6 pines 
+5 
+500 
+2.500 
+19 
+PCB 
+1 
+55.000 
+55.000 
+ 
+Total 
+ 
+ 
+223.200 
+Nota. Valores en pesos colombianos. 
